@@ -11,11 +11,21 @@
 
 
 //Prueba cinta video
-    include "../model/CintaVideo.php";
+    // include "../model/CintaVideo.php";
 
-    $miCinta = new CintaVideo("Los cazafantasmas", 23, 3.5, 107); 
-    echo "<strong>" . $miCinta->getTitulo() . "</strong>"; 
-    echo "<br>Precio: " . $miCinta->getPrecio() . " euros"; 
-    echo "<br>Precio IVA incluido: " . $miCinta->getPrecioConIva() . " euros";
-    $miCinta->muestraResumen();
+    // $miCinta = new CintaVideo("Los cazafantasmas", 23, 3.5, 107); 
+    // echo "<strong>" . $miCinta->getTitulo() . "</strong>"; 
+    // echo "<br>Precio: " . $miCinta->getPrecio() . " euros"; 
+    // echo "<br>Precio IVA incluido: " . $miCinta->getPrecioConIva() . " euros";
+    // $miCinta->muestraResumen();
+
+
+//Prueba Dvd
+    include "../model/Dvd.php";
+
+    $miDvd = new Dvd("Origen", 24, 15, "es,en,fr", "16:9"); 
+    echo "<strong>" . $miDvd->getTitulo() . "</strong>"; 
+    echo "<br>Precio: " . $miDvd->getPrecio() . " euros"; 
+    echo "<br>Precio IVA incluido: " . $miDvd->getPrecioConIva() . " euros";
+    $miDvd->muestraResumen();
 ?>
