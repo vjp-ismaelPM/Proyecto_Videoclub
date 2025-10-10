@@ -12,7 +12,6 @@ class Soporte
     {
         return $this->titulo;
     }
-
     public function setTitulo($titulo)
     {
         $this->titulo = $titulo;
