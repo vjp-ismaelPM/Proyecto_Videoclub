@@ -1,5 +1,4 @@
 <?php 
-
 class Soporte{
     private const IVA = 0.21;
     
@@ -25,12 +24,16 @@ class Soporte{
 
 //METODOS
 
-    //Metodo que devuelve el precio con el IVA incluido
+    /**
+     * Metodo que devuelve el precio con el IVA incluido
+     */
     public function getPrecioConIva(){
         return $this->precio * (1 + self::IVA);
     }
 
-    //Metodo que muestra un resumen de los datos del soporte
+    /**
+     * Metodo que muestra un resumen de los datos del soporte
+     */
     public function muestraResumen(){
         echo
             '<br>' . $this->titulo . '<br>' . $this->precio . ' (IVA no incluido)'
