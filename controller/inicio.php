@@ -31,11 +31,17 @@
 
 
 //Prueba Juegos
-    include ("../model/Juego.php");
+    // include ("../model/Juego.php");
 
-    $miJuego = new Juego("The Last of Us Part II", 26, 49.99, "PS4", 3, 3); 
-    echo "<strong>" . $miJuego->getTitulo() . "</strong>"; 
-    echo "<br>Precio: " . $miJuego->getPrecio() . " euros"; 
-    echo "<br>Precio IVA incluido: " . $miJuego->getPrecioConIva() . " euros";
-    $miJuego->muestraResumen();
+    // $miJuego = new Juego("The Last of Us Part II", 26, 49.99, "PS4", 3, 3); 
+    // echo "<strong>" . $miJuego->getTitulo() . "</strong>"; 
+    // echo "<br>Precio: " . $miJuego->getPrecio() . " euros"; 
+    // echo "<br>Precio IVA incluido: " . $miJuego->getPrecioConIva() . " euros";
+    // $miJuego->muestraResumen();
+
+//Prueba Cliente ejercicio 324
+    include_once "../model/Cliente.php";
+
+    $cliente1 = new Cliente("Bruce Wayne", 23);
+    $cliente1->muestraResumen();
 ?>
