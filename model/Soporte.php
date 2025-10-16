@@ -36,7 +36,7 @@ class Soporte{
      */
     public function muestraResumen(){
         echo
-            '<br>' . $this->titulo . '<br>' . $this->precio . ' (IVA no incluido)'
+            '<strong>' . $this->titulo . '</strong><br>' . $this->precio . ' (IVA no incluido)'
         ;
     }
 

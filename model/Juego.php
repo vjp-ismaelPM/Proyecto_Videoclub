@@ -1,5 +1,5 @@
 <?php
-include ("Soporte.php");
+include_once("Soporte.php");
 
 class Juego extends Soporte {
 
@@ -36,6 +36,7 @@ class Juego extends Soporte {
      * Metodo que muestra un resumen de los datos del soporte
      */
     public function muestraResumen(){
+        echo'Juego para:' . $this->consola . '<br>';
         parent::muestraResumen();
         echo
             '<br>' . $this->muestraJugadoresPosibles();

@@ -1,6 +1,6 @@
 <?php
 
-include("Soporte.php");
+include_once("Soporte.php");
 
 class CintaVideo extends Soporte{
     
@@ -20,10 +20,9 @@ class CintaVideo extends Soporte{
      * Metodo que muestra un resumen de los datos del soporte
      */
     public function muestraResumen(){
+        echo'Película en VHS:<br>';
         parent::muestraResumen();
-        echo
-            '<br>Duración: ' . $this->duracion . " minutos"
-        ;
+        echo'<br>Duración: ' . $this->duracion . " minutos";
     }
 }
 

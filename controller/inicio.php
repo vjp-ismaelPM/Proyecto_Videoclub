@@ -40,8 +40,32 @@
     // $miJuego->muestraResumen();
 
 //Prueba Cliente ejercicio 324
-    include_once "../model/Cliente.php";
+    // include_once "../model/Cliente.php";
+
+    // $cliente1 = new Cliente("Bruce Wayne", 23);
+    // $cliente1->muestraResumen();
+    
+//Prueba Cliente ejercicio 325
+    include ("../model/Cliente.php");
+    include ("../model/CintaVideo.php");
+    include ("../model/Dvd.php");
+    include ("../model/Juego.php");
 
     $cliente1 = new Cliente("Bruce Wayne", 23);
-    $cliente1->muestraResumen();
+    $cliente2 = new Cliente("Clark Kent", 33);
+
+    //mostramos el número de cada cliente creado 
+    echo "<br>El identificador del cliente 1 es: " . $cliente1->getNumero();
+    echo "<br>El identificador del cliente 2 es: " . $cliente2->getNumero();
+
+    //instancio algunos soportes 
+    $soporte1 = new CintaVideo("Los cazafantasmas", 23, 3.5, 107);
+    $soporte2 = new Juego("The Last of Us Part II", 26, 49.99, "PS4", 1, 1);  
+    $soporte3 = new Dvd("Origen", 24, 15, "es,en,fr", "16:9");
+    $soporte4 = new Dvd("El Imperio Contraataca", 4, 3, "es,en","16:9");
+
+    //alquilo algunos soportes
+    $cliente1->alquilar($soporte1);
+    $cliente1->alquilar($soporte2);
+    $cliente1->alquilar($soporte3);
 ?>

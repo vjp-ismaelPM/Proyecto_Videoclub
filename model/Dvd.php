@@ -1,6 +1,6 @@
 <?php
 
-include ("Soporte.php");
+include_once("Soporte.php");
 
 class Dvd extends Soporte{
        
@@ -21,10 +21,11 @@ class Dvd extends Soporte{
      * Metodo que muestra un resumen de los datos del soporte
      */
     public function muestraResumen(){
+        echo'Película en DVD:<br>';
         parent::muestraResumen();
         echo
             '<br>Idiomas: ' . $this->idiomas . 
-            '<br>Formato Pantalla: ' . $this->formatPantalla 
+            '<br>Formato Pantalla: ' . $this->formatPantalla ;
         ;
     }
 }
