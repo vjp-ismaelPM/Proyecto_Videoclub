@@ -17,6 +17,10 @@ class Cliente {
 
 //GETTERS & SETTERS
 
+    public function getNombre():string{
+        return $this->nombre;
+    }
+
     public function getNumero():int{
         return $this->numero;
     }
@@ -31,6 +35,9 @@ class Cliente {
 
 //METODOS
 
+    /**
+     * Metodo que actualiza el numero de soportes alquilados
+     */
     public function actualizarNumSoportesAlquilados(){
         $this->numSoportesAlquilados = count($this->soportesAlquilados);
     }
@@ -116,7 +123,7 @@ class Cliente {
         if($errores !== "" ){
             echo $errores;
         }
-        
+
         return $devuelto;
     }
 
