@@ -1,5 +1,5 @@
 <?php 
-abstract class Soporte{
+abstract class Soporte implements Resumible{
     private const IVA = 0.21;
     
 //CONSTRUCTOR
@@ -32,9 +32,10 @@ abstract class Soporte{
     }
 
     /**
-     * Metodo que muestra un resumen de los datos del soporte
+     * Metodo que muestra un resumen de los datos del soporte, no hace falta que lo implemeten los hijos
+     * ya que heredan de soporte
      */
-    public function muestraResumen(){
+     public function muestraResumen(){
         echo
             '<strong>' . $this->titulo . '</strong><br>' . $this->precio . ' (IVA no incluido)'
         ;
