@@ -36,9 +36,9 @@ class Videoclub{
     /**
      * Metodo para incluir un producto a la lista de productos
      * 
-     * @param Soporte $producto Es el producto que se aniadira a la lista productos
+     * @param Soporte $producto Es el producto que se aniadir a la lista productos
      */
-    public function incluirProducto(Soporte $producto){
+    private function incluirProducto(Soporte $producto){
         $this->productos[] = $producto;
         echo "<p>Inculido producto " . $this->numProductos . "</p>";
         $this->actuzalizarNumProductos();

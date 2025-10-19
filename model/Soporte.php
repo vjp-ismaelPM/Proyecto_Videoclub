@@ -1,5 +1,5 @@
 <?php 
-class Soporte{
+abstract class Soporte{
     private const IVA = 0.21;
     
 //CONSTRUCTOR
