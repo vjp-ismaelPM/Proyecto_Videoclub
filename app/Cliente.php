@@ -2,9 +2,13 @@
 
 namespace Dwes\ProyectoVideoclub;
 
+use Dwes\ProyectoVideoclub\Util\CupoSuperadoException;
+use Dwes\ProyectoVideoclub\Util\SoporteNoEncontradoException;
+use Dwes\ProyectoVideoclub\Util\SoporteYaAlquiladoException;
+
 include_once(__DIR__ . '/../autoload.php');
 
-class Cliente {
+class Cliente{
         
 //CONSTRUCTOR
     public function __construct(
@@ -75,7 +79,6 @@ class Cliente {
      * @return bool Devuelve true si el soporte se ha podido alquilar, false en caso contrario
      */
     public function alquilar(Soporte $s){
-        $errores = "";
         if(!$this->tieneAlquilado($s)){
 
             if($this->getNumSoportesAlquilados() < $this->maxAlquilerConcurrente){
@@ -87,15 +90,12 @@ class Cliente {
                 $s->muestraResumen();
 
             }else{
-               $errores .= "<p>Este cliente (<strong>" . $this->nombre . "</strong>) tiene " . $this->getNumSoportesAlquilados() . " elementos alquilados. No puede alquilar más en este videoclub hasta que no devuelva algo</p>";
+                throw new CupoSuperadoException("<p>Este cliente (<strong>" . $this->nombre . "</strong>) tiene " . $this->getNumSoportesAlquilados() . " elementos alquilados. No puede alquilar más en este videoclub hasta que no devuelva algo</p>");
+               
             }
 
         }else{
-            $errores .= "<p>El cliente ya tiene alquilado el soporte <strong>" . $s->getTitulo() . "</strong></p>";
-        }
-
-        if($errores !== "" ){
-            echo $errores;
+                throw new SoporteYaAlquiladoException("<p>El cliente ya tiene alquilado el soporte <strong>" . $s->getTitulo() . "</strong></p>");
         }
 
         return $this;
@@ -107,26 +107,19 @@ class Cliente {
      * @param int $numSoporte Es la posicion del soporte a devolver
      * @return bool Devuelve true si el soporte se ha podido devolver, false en caso contrario
      */
-    public function devolver(int $numSoporte):bool{
-        $devuelto = false;
-        $errores = "";
+    public function devolver(int $numSoporte){
         if($numSoporte < $this->numSoportesAlquilados){
                 $soporteAux = $this->soportesAlquilados[$numSoporte];
                 $soporteAux->alquilado = false;
                 unset($this->soportesAlquilados[$numSoporte]);
                 $this->soportesAlquilados = array_values($this->soportesAlquilados);
                 $this->actualizarNumSoportesAlquilados();
-                $devuelto = true;
                 echo "<p>Se ha devuelto el soporte seleccionado (" . $soporteAux->getTitulo() . ")</p>";
         }else{
-            $errores .= "<p>No se ha podido encontrar el soporte en los alquileres de este cliente(<strong>" . $this->nombre . "</strong>)</p>";
-        }
-        
-        if($errores !== "" ){
-            echo $errores;
+                throw new SoporteNoEncontradoException("<p>No se ha podido encontrar el soporte en los alquileres de este cliente(<strong>" . $this->nombre . "</strong>)</p>");       
         }
 
-        return $devuelto;
+        return $this;
     }
 
     /**

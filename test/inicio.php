@@ -9,6 +9,9 @@
     use Dwes\ProyectoVideoclub\Dvd;
     use Dwes\ProyectoVideoclub\CintaVideo;
     use Dwes\ProyectoVideoclub\Cliente;
+    use Dwes\ProyectoVideoclub\Util\CupoSuperadoException;
+use Dwes\ProyectoVideoclub\Util\SoporteNoEncontradoException;
+use Dwes\ProyectoVideoclub\Util\SoporteYaAlquiladoException;
 
 //Prueba soporte ()
 //Al cambiar la clase a abstracta deja de funcionar esta prueba, se queda como prueba de que se comprobo el funcionamiento antes del cambio
@@ -66,26 +69,38 @@
     // $soporte3 = new Dvd("Origen", 24, 15, "es,en,fr", "16:9");
     // $soporte4 = new Dvd("El Imperio Contraataca", 4, 3, "es,en","16:9");
 
+    // //Creo un metodo para capturar las excepciones
+    // function comprobar(callable $accion){
+    //     try {
+    //         $accion();
+    //     } catch (SoporteYaAlquiladoException | CupoSuperadoException | SoporteNoEncontradoException $e) {
+    //         echo $e->getMessage();
+    //     }
+    // }
+
     // //alquilo algunos soportes
-    // $cliente1->alquilar($soporte1);
-    // $cliente1->alquilar($soporte2);
-    // $cliente1->alquilar($soporte3);
+    // comprobar(fn() => $cliente1->alquilar($soporte1));
+    // comprobar(fn() => $cliente1->alquilar($soporte2));
+    // comprobar(fn() => $cliente1->alquilar($soporte3));
 
     // //voy a intentar alquilar de nuevo un soporte que ya tiene alquilado
-    // $cliente1->alquilar($soporte1);
+    // comprobar(fn() => $cliente1->alquilar($soporte1));
     // //el cliente tiene 3 soportes en alquiler como máximo
     // //este soporte no lo va a poder alquilar
-    // $cliente1->alquilar($soporte4);
+    // comprobar(fn() => $cliente1->alquilar($soporte4));
     // //este soporte no lo tiene alquilado
-    // $cliente1->devolver(4);
+    // comprobar(fn() => $cliente1->devolver(4));
     // //devuelvo un soporte que sí que tiene alquilado
-    // $cliente1->devolver(2);
+    // comprobar(fn() => $cliente1->devolver(2));
     // //alquilo otro soporte
-    // $cliente1->alquilar($soporte4);
+    // comprobar(fn() => $cliente1->alquilar($soporte4));
     // //listo los elementos alquilados
     // $cliente1->listarAlquileres();
     // //este cliente no tiene alquileres
-    // $cliente2->devolver(2);
+    // comprobar(fn() => $cliente1->devolver(2));
+
+    
+
 
 
 
@@ -154,4 +169,9 @@
 
     //listo los socios 
     $vc->listarSocios();
+
+
+    echo "Prueba concatenacion de metodos";
+    $vc->alquilarSocioProducto(1,1)->listarSocios();
+
 ?>

@@ -2,6 +2,9 @@
 
 namespace Dwes\ProyectoVideoclub;
 
+use Dwes\ProyectoVideoclub\Util\CupoSuperadoException;
+use Dwes\ProyectoVideoclub\Util\SoporteYaAlquiladoException;
+
 include_once(__DIR__ . '/../autoload.php');
 
 
@@ -143,14 +146,27 @@ class Videoclub
         echo "</p>";
     }
 
+    /**
+     * Metodo para que un cliente alquile un soporte
+     * 
+     * @param int $numCliente el numero del cliente
+     * @param int $numSoporte el numero del soporte
+     */
     public function alquilarSocioProducto(int $numCliente, int $numSoporte)
     {
         if ($numCliente <= $this->numSocios && $numSoporte <= $this->numProductos) {
             $socio = $this->socios[$numCliente];
             $producto = $this->productos[$numSoporte];
-            if ($socio->alquilar($producto)) {
+
+
+            try {
+                $socio->alquilar($producto);
                 echo "***  Alquilado soporte a: " . $socio->getNombre() . "***</p>";
+            } catch (SoporteYaAlquiladoException | CupoSuperadoException $e) {
+                echo $e->getMessage();
             }
+
+
         } else {
             echo "Introduce valores correctos";
         }
