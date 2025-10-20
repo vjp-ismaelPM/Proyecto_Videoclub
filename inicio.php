@@ -1,4 +1,18 @@
 <?php
+namespace Dwes\ProyectoVideoclub;
+
+include_once("model/Soporte.php");
+include_once("model/Juego.php");
+include_once("model/Dvd.php");
+include_once("model/CintaVideo.php");
+include_once("model/Cliente.php");
+include_once("model/Videoclub.php");
+
+use Dwes\ProyectoVideoclub\Videoclub;
+use Dwes\ProyectoVideoclub\Juego;
+use Dwes\ProyectoVideoclub\Dvd;
+use Dwes\ProyectoVideoclub\CintaVideo;
+use Dwes\ProyectoVideoclub\Cliente;
 
 //Prueba soporte
     // include "../model/Soporte.php";

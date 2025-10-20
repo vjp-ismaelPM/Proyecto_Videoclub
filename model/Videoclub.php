@@ -1,5 +1,7 @@
 <?php
 
+namespace Dwes\ProyectoVideoclub;
+
 include_once("Soporte.php");
 include_once("CintaVideo.php");
 include_once("Dvd.php");
@@ -7,6 +9,8 @@ include_once("Juego.php");
 include_once("Cliente.php");
 
 class Videoclub{
+
+    
 
 //CONSTRUCTOR
     public function __construct(
