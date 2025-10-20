@@ -1,12 +1,7 @@
 <?php
 namespace Dwes\ProyectoVideoclub;
 
-include_once("model/Soporte.php");
-include_once("model/Juego.php");
-include_once("model/Dvd.php");
-include_once("model/CintaVideo.php");
-include_once("model/Cliente.php");
-include_once("model/Videoclub.php");
+include_once(__DIR__ . '/../autoload.php');
 
 use Dwes\ProyectoVideoclub\Videoclub;
 use Dwes\ProyectoVideoclub\Juego;
