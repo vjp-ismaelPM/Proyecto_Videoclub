@@ -130,6 +130,8 @@ class Videoclub{
             echo "Introduce valores correctos";
         }
 
+        return $this;
+
     }
 
 }

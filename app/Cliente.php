@@ -1,4 +1,5 @@
 <?php 
+
 namespace Dwes\ProyectoVideoclub;
 
 include_once(__DIR__ . '/../autoload.php');
@@ -73,8 +74,7 @@ class Cliente {
      * @param Soporte $s Es el soporte a comprobar para alquilarlo
      * @return bool Devuelve true si el soporte se ha podido alquilar, false en caso contrario
      */
-    public function alquilar(Soporte $s): bool{
-        $alquilado = false;
+    public function alquilar(Soporte $s){
         $errores = "";
         if(!$this->tieneAlquilado($s)){
 
@@ -82,7 +82,6 @@ class Cliente {
 
                 $this->soportesAlquilados[] = $s;
                 $this->actualizarNumSoportesAlquilados();
-                $alquilado = true;
                 echo "<p><strong>Alquilado soporte a: </strong>" . $this->nombre . "</p>";
                 $s->muestraResumen();
 
@@ -98,7 +97,7 @@ class Cliente {
             echo $errores;
         }
 
-        return $alquilado;
+        return $this;
     }
 
     /**
