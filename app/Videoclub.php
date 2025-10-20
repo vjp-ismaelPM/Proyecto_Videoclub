@@ -1,35 +1,52 @@
 <?php
 
 namespace Dwes\ProyectoVideoclub;
+
 include_once(__DIR__ . '/../autoload.php');
 
 
-class Videoclub{
+class Videoclub
+{
 
-    
 
-//CONSTRUCTOR
+
+    //CONSTRUCTOR
     public function __construct(
         private string $nombre = "",
         private array $productos = [],
         private int $numProductos = 0,
         private array $socios = [],
         private int $numSocios = 0,
-    ){}
-         
-//METODOS 
+        private int $numProductosAlquilados = 0,
+        private int $numTotalAlquileres = 0,
+    ) {}
+
+    //GETTER
+    public function getNumProductosAlquilados(): int
+    {
+        return $this->numProductosAlquilados;
+    }
+
+    public function getNumTotalAlquileres(): int
+    {
+        return $this->numTotalAlquileres;
+    }
+    
+    //METODOS 
 
     /**
      * Metodo para actualizar el numero de productos
      */
-    public function actuzalizarNumProductos(){
+    public function actuzalizarNumProductos()
+    {
         $this->numProductos = count($this->productos);
     }
 
     /**
      * Metodo para actualizar el numero de socios
      */
-    public function actuzalizarNumSocios(){
+    public function actuzalizarNumSocios()
+    {
         $this->numSocios = count($this->socios);
     }
 
@@ -38,7 +55,8 @@ class Videoclub{
      * 
      * @param Soporte $producto Es el producto que se aniadir a la lista productos
      */
-    private function incluirProducto(Soporte $producto){
+    private function incluirProducto(Soporte $producto)
+    {
         $this->productos[] = $producto;
         echo "<p>Inculido producto " . $this->numProductos . "</p>";
         $this->actuzalizarNumProductos();
@@ -51,7 +69,8 @@ class Videoclub{
      * @param float $precio El precio de la cinta
      * @param int $duracion la duracion en minutos de la cinta 
      */
-    public function incluirCintaVideo(string $titulo, float $precio, int $duracion){
+    public function incluirCintaVideo(string $titulo, float $precio, int $duracion)
+    {
         $producto = new CintaVideo($titulo, ($this->numProductos), $precio, $duracion);
         $this->incluirProducto($producto);
     }
@@ -64,7 +83,8 @@ class Videoclub{
      * @param string $idiomas Los idiomas en los que esta el DVD
      * @param string $pantalla La resolucion en pantalla del DVD
      */
-    public function incluirDvd(string $titulo, float $precio, string $idimoas, string $pantalla){
+    public function incluirDvd(string $titulo, float $precio, string $idimoas, string $pantalla)
+    {
         $producto = new Dvd($titulo, ($this->numProductos), $precio, $idimoas, $pantalla);
         $this->incluirProducto($producto);
     }
@@ -78,7 +98,8 @@ class Videoclub{
      * @param int $min El minimo de jugadores
      * @param int $max El maximo de jugadores
      */
-    public function incluirJuego(string $titulo, float $precio, string $consola, int $min, int $max){
+    public function incluirJuego(string $titulo, float $precio, string $consola, int $min, int $max)
+    {
         $producto = new Juego($titulo, ($this->numProductos), $precio, $consola, $min, $max);
         $this->incluirProducto($producto);
     }
@@ -89,8 +110,9 @@ class Videoclub{
      * @param string $nombre Es el nombre del nuevo socio
      * @param int $maxAlquileresConcurrentes Es el maximo de alquileres que puede tener de forma concurrente
      */
-    public function incluirSocio(string $nombre, int $maxAlquileresConcurrentes = 3){
-        $socio = new Cliente($nombre,($this->numSocios),[],0,$maxAlquileresConcurrentes);
+    public function incluirSocio(string $nombre, int $maxAlquileresConcurrentes = 3)
+    {
+        $socio = new Cliente($nombre, ($this->numSocios), [], 0, $maxAlquileresConcurrentes);
         $this->socios[] = $socio;
         echo "<p>Inculido socio " . $this->numSocios . "</p>";
         $this->actuzalizarNumSocios();
@@ -99,9 +121,10 @@ class Videoclub{
     /**
      * Metodo para listar todos los productos
      */
-    public function listarProductos(){
+    public function listarProductos()
+    {
         echo "<p>Listado de los " . $this->numProductos . " productos disponibles:</p>";
-        foreach($this->productos as $producto){
+        foreach ($this->productos as $producto) {
             echo "<p>" . $producto->getNumero() . ".- ";
             echo $producto->muestraResumen() . "</p>";
         }
@@ -110,30 +133,28 @@ class Videoclub{
     /**
      * Metodo para listar todos los socios
      */
-    public function listarSocios(){
+    public function listarSocios()
+    {
         echo "<p>Listado de los " . $this->numSocios . " socios del videoclub:<br>";
-        foreach($this->socios as $socio){
-            echo ($socio->getNumero() + 1) . ".- <strong>Cliente</strong> " . $socio->getNumero() . ": " . $socio->getNombre() . "<br>".
-            "Alquileres actuales: " . $socio->getNumSoportesAlquilados() . "</br>";
+        foreach ($this->socios as $socio) {
+            echo ($socio->getNumero() + 1) . ".- <strong>Cliente</strong> " . $socio->getNumero() . ": " . $socio->getNombre() . "<br>" .
+                "Alquileres actuales: " . $socio->getNumSoportesAlquilados() . "</br>";
         }
-        echo"</p>";
+        echo "</p>";
     }
 
-    public function alquilarSocioProducto(int $numCliente, int $numSoporte){
-        if($numCliente <= $this->numSocios && $numSoporte <= $this->numProductos){
+    public function alquilarSocioProducto(int $numCliente, int $numSoporte)
+    {
+        if ($numCliente <= $this->numSocios && $numSoporte <= $this->numProductos) {
             $socio = $this->socios[$numCliente];
             $producto = $this->productos[$numSoporte];
-            if($socio->alquilar($producto)){
+            if ($socio->alquilar($producto)) {
                 echo "***  Alquilado soporte a: " . $socio->getNombre() . "***</p>";
             }
-        }else{
+        } else {
             echo "Introduce valores correctos";
         }
 
         return $this;
-
     }
-
 }
-
-?>

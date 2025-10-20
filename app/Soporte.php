@@ -10,6 +10,7 @@ abstract class Soporte implements Resumible{
         private string $titulo = "",
         private int $numero = 0,
         private float $precio = 0,
+        public bool $alquilado = false
     ) {}
 
 //GETTERS
