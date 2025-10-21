@@ -220,4 +220,83 @@ class Videoclub
             }
         }
     }
+
+    /**
+     * Metodo para que un cliente devuelva un soporte
+     * 
+     * @param int $numSocio El número del socio que devuelve el soporte
+     * @param int $numProducto El número del soporte a devolver
+     */
+
+    public function devolverSocioProducto(int $numSocio, int $numProducto): self
+    {
+        if ($numSocio < 0 || $numSocio >= $this->numSocios) {
+
+            echo "Número de socio: " . $numSocio . " no encontrado";
+            return $this;
+        }
+
+        if ($numProducto < 0 || $numProducto >= $this->numProductos) {
+
+            echo "Número de soporte: " . $numProducto . " no encontrado";
+            return $this;
+        }
+
+        $socio = $this->socios[$numSocio];
+        $producto = $this->productos[$numProducto];
+
+        // Intentar devolver el soporte
+        if ($socio->devolver($numProducto)) {
+
+            $producto->alquilado = false; // marcar como no alquilado
+            echo "El soporte " . $producto->getTitulo() . " ha sido devuelto por " . $socio->getNombre();
+        } else {
+
+            echo "El socio " . $socio->getNombre() . " no tenía alquilado el soporte " . $producto->getTitulo();
+        }
+
+        return $this;
+    }
+
+    /**
+     * Metodo para que un cliente devuelva varios soportes
+     * 
+     * @param int $numSocio El número del socio que devuelve los soportes
+     * @param array $numerosProductos Array con los números de los soportes a devolver
+     */
+    public function devolverSocioProductos(int $numSocio, array $numerosProductos): self
+    {
+        if ($numSocio < 0 || $numSocio >= $this->numSocios) {
+
+            echo "Número de socio: " . $numSocio . " no encontrado";
+            return $this;
+        }
+
+        $socio = $this->socios[$numSocio];
+
+        // Recorremos todos los productos a devolver
+        for ($i = 0; $i < count($numerosProductos); $i++) {
+
+            $numProducto = $numerosProductos[$i];
+
+            if ($numProducto < 0 || $numProducto >= $this->numProductos) {
+
+                echo "Número de sopote" . $numProducto . " no encontrado";
+                continue; // pasa al siguiente
+            }
+
+            $producto = $this->productos[$numProducto];
+
+            if ($socio->devolver($numProducto)) {
+
+                $producto->alquilado = false;
+                echo "El soporte " . $producto->getTitulo() . " devuelto por " . $socio->getNombre();
+            } else {
+
+                echo "El socio " . $socio->getNombre() . " no tenía alquilado el soporte " . $producto->getTitulo();
+            }
+        }
+
+        return $this;
+    }
 }
