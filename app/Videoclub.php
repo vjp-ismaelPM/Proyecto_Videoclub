@@ -34,7 +34,7 @@ class Videoclub
     {
         return $this->numTotalAlquileres;
     }
-    
+
     //METODOS 
 
     /**
@@ -165,12 +165,59 @@ class Videoclub
             } catch (SoporteYaAlquiladoException | CupoSuperadoException $e) {
                 echo $e->getMessage();
             }
-
-
         } else {
             echo "Introduce valores correctos";
         }
 
         return $this;
+    }
+
+    /**
+     * Metodo para que un cliente alquile varios soportes
+     * 
+     * @param int $numSocio El número del cliente
+     * @param array $numerosProductos Array con los números de los soportes a alquilar
+     */
+    public function alquilarSocioProductos(int $numSocio, array $numerosProductos): void
+    {
+        if ($numSocio < 0 || $numSocio >= $this->numSocios) {
+
+            echo "Número de socio: " . $numSocio . " no encontrado";
+            return;
+        }
+
+        $socio = $this->socios[$numSocio];
+        $todosDisponibles = true;
+
+        for ($i = 0; $i < count($numerosProductos); $i++) {
+
+            $numProducto = $numerosProductos[$i];
+
+            if ($numProducto < 0 || $numProducto >= $this->numProductos) {
+
+                echo "Número de soporte: " . $numProducto . " no encontrado";
+                $todosDisponibles = false;
+                break;
+            }
+
+            if ($this->productos[$numProducto]->alquilado) {
+
+                echo "El soorte " . $this->productos[$numProducto]->getTitulo() . " ya está alquilado";
+                $todosDisponibles = false;
+                break;
+            }
+        }
+
+        if ($todosDisponibles) {
+
+            for ($i = 0; $i < count($numerosProductos); $i++) {
+
+                $numProducto = $numerosProductos[$i];
+                $producto = $this->productos[$numProducto];
+                $socio->alquilar($producto);
+                $producto->alquilado = true;
+                echo "Soporte " . $producto->getTitulo() . "alquilado a " . $socio->getNombre();
+            }
+        }
     }
 }
