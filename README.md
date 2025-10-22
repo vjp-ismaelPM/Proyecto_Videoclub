@@ -16,6 +16,8 @@ El sistema permite gestionar clientes, productos (DVDs, juegos y cintas de víde
 Durante el desarrollo hemos aplicado los principios de **Programación Orientada a Objetos (POO)**, como herencia, encapsulación y manejo de excepciones personalizadas.  
 El código está organizado de forma modular para mantener una estructura limpia, legible y fácil de mantener.
 
+
+
 ---
 
 ## Tecnologías y herramientas utilizadas
@@ -24,8 +26,23 @@ El código está organizado de forma modular para mantener una estructura limpia
 - **Entorno de desarrollo:** XAMPP (Apache + PHP)  
 - **Editor recomendado:** Visual Studio Code  
 - **Sistema operativo:** Compatible con Windows, macOS y Linux  
+---
+
+
 
 ---
+## Uso de herramientas de asistencia
+
+Durante el desarrollo del proyecto hemos hecho uso responsable de **ChatGPT** y **Grok** para:
+
+- Obtener sugerencias sobre la organización del código y estructura de clases
+- Revisar y optimizar algunos métodos específicos
+- Resolver dudas de sintaxis o uso de POO en PHP
+
+Estas herramientas se han utilizado únicamente como apoyo, asegurándonos de entender y validar todas las soluciones antes de incorporarlas al proyecto.
+
+---
+
 
 ## Estructura del proyecto
 
@@ -110,7 +127,6 @@ $vc->alquilarSocioProducto(1,1)->listarSocios();
 - Se ha implementado una interfaz `Resumible` para definir un formato común de presentación de información.  
 - Todas las excepciones están organizadas dentro del namespace `app\util`.  
 - El código está preparado para poder ampliarse fácilmente añadiendo nuevos tipos de soportes o reglas de negocio.
-
 ---
 
 **© 2025 - Ismael Pablos Miguel & Aitor Trujillo Pablo**
