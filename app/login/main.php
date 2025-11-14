@@ -19,7 +19,7 @@ if (!isset($_SESSION['usuario'])) {
         body {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.85)), url("../../public/img/SalaDeCine3.png") no-repeat center fixed;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.85)), url("../../public/img/SalaDeCine3.png") no-repeat center fixed;
             background-size: cover;
             color: #f0f0f0;
             display: flex;
@@ -59,11 +59,9 @@ if (!isset($_SESSION['usuario'])) {
 </head>
 
 <body>
-
     <h1>Bienvenido, <?php echo htmlspecialchars($_SESSION['usuario']); ?>!</h1>
     <p>Has iniciado sesión correctamente en el Videoclub.</p>
     <a href="logout.php">Cerrar sesión</a>
-
 </body>
 
 </html>
