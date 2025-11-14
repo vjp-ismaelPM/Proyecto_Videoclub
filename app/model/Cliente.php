@@ -1,12 +1,13 @@
 <?php 
 
-namespace Dwes\ProyectoVideoclub;
+namespace Dwes\ProyectoVideoclub\Model;
 
-use Dwes\ProyectoVideoclub\Util\CupoSuperadoException;
-use Dwes\ProyectoVideoclub\Util\SoporteNoEncontradoException;
-use Dwes\ProyectoVideoclub\Util\SoporteYaAlquiladoException;
 
-include_once(__DIR__ . '/../autoload.php');
+use Dwes\ProyectoVideoclub\Model\Util\CupoSuperadoException;
+use Dwes\ProyectoVideoclub\Model\Util\SoporteNoEncontradoException;
+use Dwes\ProyectoVideoclub\Model\Util\SoporteYaAlquiladoException;
+
+include_once(__DIR__ . '/../../autoload.php');
 
 class Cliente{
         

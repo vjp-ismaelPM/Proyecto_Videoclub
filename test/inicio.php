@@ -4,14 +4,14 @@
 
     include_once(__DIR__ . '/../autoload.php');
 
-    use Dwes\ProyectoVideoclub\Videoclub;
-    use Dwes\ProyectoVideoclub\Juego;
-    use Dwes\ProyectoVideoclub\Dvd;
-    use Dwes\ProyectoVideoclub\CintaVideo;
-    use Dwes\ProyectoVideoclub\Cliente;
-    use Dwes\ProyectoVideoclub\Util\CupoSuperadoException;
-use Dwes\ProyectoVideoclub\Util\SoporteNoEncontradoException;
-use Dwes\ProyectoVideoclub\Util\SoporteYaAlquiladoException;
+    use Dwes\ProyectoVideoclub\Model\Videoclub;
+    use Dwes\ProyectoVideoclub\Model\Juego;
+    use Dwes\ProyectoVideoclub\Model\Dvd;
+    use Dwes\ProyectoVideoclub\Model\CintaVideo;
+    use Dwes\ProyectoVideoclub\Model\Cliente;
+    use Dwes\ProyectoVideoclub\Util\Model\CupoSuperadoException;
+use Dwes\ProyectoVideoclub\Util\Model\SoporteNoEncontradoException;
+use Dwes\ProyectoVideoclub\Util\Model\SoporteYaAlquiladoException;
 
 //Prueba soporte ()
 //Al cambiar la clase a abstracta deja de funcionar esta prueba, se queda como prueba de que se comprobo el funcionamiento antes del cambio
@@ -140,38 +140,38 @@ use Dwes\ProyectoVideoclub\Util\SoporteYaAlquiladoException;
 
 //Prueba Videoclub 2.0
 
-    $vc = new Videoclub("Severo 8A"); 
+    // $vc = new Videoclub("Severo 8A"); 
 
-    //voy a incluir unos cuantos soportes de prueba 
-    $vc->incluirJuego("God of War", 19.99, "PS4", 1, 1); 
-    $vc->incluirJuego("The Last of Us Part II", 49.99, "PS4", 1, 1);
-    $vc->incluirDvd("Torrente", 4.5, "es","16:9"); 
-    $vc->incluirDvd("Origen", 4.5, "es,en,fr", "16:9"); 
-    $vc->incluirDvd("El Imperio Contraataca", 3, "es,en","16:9"); 
-    $vc->incluirCintaVideo("Los cazafantasmas", 3.5, 107); 
-    $vc->incluirCintaVideo("El nombre de la Rosa", 1.5, 140); 
+    // //voy a incluir unos cuantos soportes de prueba 
+    // $vc->incluirJuego("God of War", 19.99, "PS4", 1, 1); 
+    // $vc->incluirJuego("The Last of Us Part II", 49.99, "PS4", 1, 1);
+    // $vc->incluirDvd("Torrente", 4.5, "es","16:9"); 
+    // $vc->incluirDvd("Origen", 4.5, "es,en,fr", "16:9"); 
+    // $vc->incluirDvd("El Imperio Contraataca", 3, "es,en","16:9"); 
+    // $vc->incluirCintaVideo("Los cazafantasmas", 3.5, 107); 
+    // $vc->incluirCintaVideo("El nombre de la Rosa", 1.5, 140); 
 
-    //listo los productos 
-    $vc->listarProductos(); 
+    // //listo los productos 
+    // $vc->listarProductos(); 
 
-    //voy a crear algunos socios 
-    $vc->incluirSocio("Amancio Ortega"); 
-    $vc->incluirSocio("Pablo Picasso", 2); 
+    // //voy a crear algunos socios 
+    // $vc->incluirSocio("Amancio Ortega"); 
+    // $vc->incluirSocio("Pablo Picasso", 2); 
 
-    $vc->alquilarSocioProducto(1,2); 
-    $vc->alquilarSocioProducto(1,3); 
-    //alquilo otra vez el soporte 2 al socio 1. 
-    // no debe dejarme porque ya lo tiene alquilado 
-    $vc->alquilarSocioProducto(1,2); 
-    //alquilo el soporte 6 al socio 1. 
-    //no se puede porque el socio 1 tiene 2 alquileres como máximo 
-    $vc->alquilarSocioProducto(1,6); 
+    // $vc->alquilarSocioProducto(1,2); 
+    // $vc->alquilarSocioProducto(1,3); 
+    // //alquilo otra vez el soporte 2 al socio 1. 
+    // // no debe dejarme porque ya lo tiene alquilado 
+    // $vc->alquilarSocioProducto(1,2); 
+    // //alquilo el soporte 6 al socio 1. 
+    // //no se puede porque el socio 1 tiene 2 alquileres como máximo 
+    // $vc->alquilarSocioProducto(1,6); 
 
-    //listo los socios 
-    $vc->listarSocios();
+    // //listo los socios 
+    // $vc->listarSocios();
 
 
-    echo "Prueba concatenacion de metodos";
-    $vc->alquilarSocioProducto(1,1)->listarSocios();
+    // echo "Prueba concatenacion de metodos";
+    // $vc->alquilarSocioProducto(1,1)->listarSocios();
 
 ?>

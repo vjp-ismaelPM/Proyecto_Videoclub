@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -7,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Videoclub - Login</title>
     <style>
-        /* Estilo general */
+        /* Estilos generales */
         body {
             margin: 0;
             padding: 0;
@@ -16,11 +20,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.85)), url("img/SalaDeCine3.png") no-repeat center 0px fixed;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.85)), url("../img/SalaDeCine3.png") no-repeat center 0 fixed;
             background-size: cover;
             color: #f0f0f0;
         }
-
 
         fieldset {
             border: none;
@@ -30,6 +33,9 @@
             padding: 2rem;
             width: 320px;
             backdrop-filter: blur(6px);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
         legend {
@@ -38,44 +44,21 @@
             color: #FFD700;
             font-weight: bold;
             text-shadow: 0 0 6px #FFD700;
-            margin-bottom: 1rem;
-        }
-
-        .login-container::before {
-            font-size: 3rem;
-            display: block;
-            text-align: center;
             margin-bottom: 0.5rem;
-            animation: pulse 2s infinite ease-in-out;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 0.8;
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 1;
-                transform: scale(1.1);
-            }
         }
 
         .fila {
-            margin-bottom: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
         }
 
         label {
-            display: block;
             font-size: 1rem;
-            margin-bottom: 0.4rem;
         }
 
         input[type="text"],
         input[type="password"] {
-            width: 100%;
             padding: 0.6rem;
             border: 1px solid #444;
             border-radius: 8px;
@@ -93,7 +76,6 @@
         }
 
         input[type="submit"] {
-            width: 100%;
             padding: 0.7rem;
             background-color: #FFD700;
             border: none;
@@ -110,7 +92,16 @@
             transform: scale(1.03);
         }
 
-        /* Responsivo */
+        .error {
+            color: #ff4d4f;
+            background-color: rgba(255, 0, 0, 0.2);
+            border: 1px solid #ff4d4f;
+            padding: 0.5rem;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+        }
+
         @media (max-width: 480px) {
             fieldset {
                 width: 90%;
@@ -122,28 +113,33 @@
 
 <body>
 
-    <div class="login-container">
-        <form action="login.php" method="post">
-            <fieldset>
-                <legend>Acceso al Videoclub</legend>
+    <form action="../app/login/login.php" method="post">
+        <fieldset>
+            <legend>Acceso al Videoclub</legend>
 
-                <div class="fila">
-                    <label for="usuario">Usuario:</label>
-                    <input type="text" name="usuario" id="usuario" maxlength="50" required />
-                </div>
+            <?php
+            // Mostrar mensaje de error si existe
+            if (isset($_SESSION['error'])) {
+                echo '<div class="error">' . $_SESSION['error'] . '</div>';
+                unset($_SESSION['error']);
+            }
+            ?>
 
-                <div class="fila">
-                    <label for="password">Contraseña:</label>
-                    <input type="password" name="password" id="password" maxlength="50" required />
-                </div>
+            <div class="fila">
+                <label for="usuario">Usuario:</label>
+                <input type="text" name="usuario" id="usuario" maxlength="50" />
+            </div>
 
-                <div class="fila">
-                    <input type="submit" name="enviar" value="Entrar" />
-                </div>
+            <div class="fila">
+                <label for="password">Contraseña:</label>
+                <input type="password" name="password" id="password" maxlength="50" />
+            </div>
 
-            </fieldset>
-        </form>
-    </div>
+            <div class="fila">
+                <input type="submit" name="enviar" value="Entrar" />
+            </div>
+        </fieldset>
+    </form>
 
 </body>
 

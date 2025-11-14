@@ -1,6 +1,7 @@
 <?php 
-namespace Dwes\ProyectoVideoclub;
-include_once(__DIR__ . '/../autoload.php');
+namespace Dwes\ProyectoVideoclub\Model;
+
+include_once(__DIR__ . '/../../autoload.php');
 
 abstract class Soporte implements Resumible{
     private const IVA = 0.21;
