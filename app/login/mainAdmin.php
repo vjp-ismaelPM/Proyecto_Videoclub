@@ -1,16 +1,49 @@
 <?php
+require_once(__DIR__ . '/../model/Cliente.php');
+require_once(__DIR__ . '/../model/Juego.php');
+require_once(__DIR__ . '/../model/Dvd.php');
+require_once(__DIR__ . '/../model/CintaVideo.php');
+
+use Dwes\ProyectoVideoclub\Model\Cliente;
+use Dwes\ProyectoVideoclub\Model\Juego;
+use Dwes\ProyectoVideoclub\Model\Dvd;
+use Dwes\ProyectoVideoclub\Model\CintaVideo;
+
 session_start();
 
-// Comprobar si es admin
 if (!isset($_SESSION['usuario']) || $_SESSION['usuario'] !== 'admin') {
     header("Location: ../../public/index.php");
     exit;
 }
 
-$soportes = $_SESSION['soportes'] ?? [];
-$clientes = $_SESSION['clientes'] ?? [];
-?>
+// Reconstruimos soportes
+$soportes = [];
+foreach ($_SESSION['soportesData'] as $s) {
+    switch ($s['tipo']) {
+        case 'Juego':
+            $soportes[] = new Juego($s['titulo'], $s['numero'], $s['precio'], $s['consola'], $s['min'], $s['max']);
+            break;
+        case 'Dvd':
+            $soportes[] = new Dvd($s['titulo'], $s['numero'], $s['precio'], $s['idiomas'], $s['formato']);
+            break;
+        case 'CintaVideo':
+            $soportes[] = new CintaVideo($s['titulo'], $s['numero'], $s['precio'], $s['duracion']);
+            break;
+    }
+}
 
+// Reconstruimos clientes
+$clientes = [];
+foreach ($_SESSION['clientesData'] as $c) {
+    $alquileres = [];
+    foreach ($c['alquileres'] as $id) {
+        foreach ($soportes as $s) {
+            if ($s->getNumero() === $id) $alquileres[] = $s;
+        }
+    }
+    $clientes[] = new Cliente($c['nombre'], $c['usuario'], $c['password'], 0, $alquileres, count($alquileres), $c['max']);
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -19,14 +52,14 @@ $clientes = $_SESSION['clientes'] ?? [];
     <title>Videoclub - Admin</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.85)), url("../../public/img/SalaDeCine3.png") no-repeat center fixed;
-            background-size: cover;
+            font-family: sans-serif;
+            background: #222;
             color: #f0f0f0;
             padding: 2rem;
         }
 
-        h1 {
+        h1,
+        h2 {
             color: #FFD700;
         }
 
@@ -40,24 +73,22 @@ $clientes = $_SESSION['clientes'] ?? [];
         td {
             border: 1px solid #444;
             padding: 0.5rem;
-            text-align: left;
         }
 
         th {
-            background-color: #333;
+            background: #333;
         }
 
         tr:nth-child(even) {
-            background-color: #222;
+            background: #222;
         }
 
         a {
             text-decoration: none;
-            color: #1a1a1a;
+            color: #222;
             background: #FFD700;
             padding: 0.5rem 1rem;
             border-radius: 8px;
-            font-weight: bold;
         }
 
         a:hover {
@@ -67,27 +98,23 @@ $clientes = $_SESSION['clientes'] ?? [];
 </head>
 
 <body>
-
-    <h1>Bienvenido, <?php echo htmlspecialchars($_SESSION['usuario']); ?>!</h1>
+    <h1>Bienvenido, <?= htmlspecialchars($_SESSION['usuario']); ?>!</h1>
 
     <h2>Listado de Clientes</h2>
     <table>
         <tr>
-            <th>ID</th>
             <th>Nombre</th>
             <th>Usuario</th>
-            <th>Alquileres Máx</th>
+            <th>Núm Soportes Alq</th>
         </tr>
         <?php foreach ($clientes as $c): ?>
             <tr>
-                <td><?= $c['id']; ?></td>
-                <td><?= htmlspecialchars($c['nombre']); ?></td>
-                <td><?= htmlspecialchars($c['usuario']); ?></td>
-                <td><?= $c['alquileresMax']; ?></td>
+                <td><?= htmlspecialchars($c->getNombre()); ?></td>
+                <td><?= htmlspecialchars($c->getUsuario()); ?></td>
+                <td><?= $c->getNumSoportesAlquilados(); ?></td>
             </tr>
         <?php endforeach; ?>
     </table>
-
 
     <h2>Listado de Soportes</h2>
     <table>
@@ -99,14 +126,14 @@ $clientes = $_SESSION['clientes'] ?? [];
         </tr>
         <?php foreach ($soportes as $s): ?>
             <tr>
-                <td><?php echo $s['id']; ?></td>
-                <td><?php echo htmlspecialchars($s['nombre']); ?></td>
-                <td><?php echo $s['precio']; ?> €</td>
+                <td><?= $s->getNumero(); ?></td>
+                <td><?= htmlspecialchars($s->getTitulo()); ?></td>
+                <td><?= $s->getPrecio(); ?> €</td>
                 <td>
                     <?php
-                    if (isset($s['plataforma'])) echo $s['plataforma'];
-                    elseif (isset($s['idiomas'])) echo "Idiomas: {$s['idiomas']}, Formato: {$s['formato']}";
-                    elseif (isset($s['duracion'])) echo "Duración: {$s['duracion']} min";
+                    if ($s instanceof Juego) echo "Consola: " . $s->getConsola() . " (" . $s->getMinJugadores() . "-" . $s->getMaxJugadores() . " jugadores)";
+                    elseif ($s instanceof Dvd) echo "Idiomas: " . $s->getIdiomas() . ", Formato: " . $s->getFormato();
+                    elseif ($s instanceof CintaVideo) echo "Duración: " . $s->getDuracion() . " min";
                     ?>
                 </td>
             </tr>
@@ -114,7 +141,6 @@ $clientes = $_SESSION['clientes'] ?? [];
     </table>
 
     <a href="logout.php">Cerrar sesión</a>
-
 </body>
 
 </html>
