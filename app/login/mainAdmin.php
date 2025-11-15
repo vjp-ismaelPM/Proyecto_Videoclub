@@ -75,16 +75,19 @@ $clientes = $_SESSION['clientes'] ?? [];
         <tr>
             <th>ID</th>
             <th>Nombre</th>
+            <th>Usuario</th>
             <th>Alquileres Máx</th>
         </tr>
         <?php foreach ($clientes as $c): ?>
             <tr>
-                <td><?php echo $c['id']; ?></td>
-                <td><?php echo htmlspecialchars($c['nombre']); ?></td>
-                <td><?php echo $c['alquileresMax']; ?></td>
+                <td><?= $c['id']; ?></td>
+                <td><?= htmlspecialchars($c['nombre']); ?></td>
+                <td><?= htmlspecialchars($c['usuario']); ?></td>
+                <td><?= $c['alquileresMax']; ?></td>
             </tr>
         <?php endforeach; ?>
     </table>
+
 
     <h2>Listado de Soportes</h2>
     <table>

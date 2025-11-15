@@ -14,6 +14,8 @@ class Cliente{
 //CONSTRUCTOR
     public function __construct(
         private string $nombre = "",
+        private string $usuario = "",      
+        private string $password = "", 
         private int $numero = 0,
         private array $soportesAlquilados = [],
         private int $numSoportesAlquilados = 0,
@@ -26,6 +28,14 @@ class Cliente{
 
     public function getNombre():string{
         return $this->nombre;
+    }
+
+    public function getUsuario():string{
+        return $this->usuario;
+    }
+
+    public function getPassword():string{
+        return $this->password;
     }
 
     public function getNumero():int{
