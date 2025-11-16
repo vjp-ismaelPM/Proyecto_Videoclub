@@ -44,7 +44,6 @@ foreach ($_SESSION['clientesData'] as $c) {
     $clientes[] = new Cliente($c['nombre'], $c['usuario'], $c['password'], 0, $alquileres, count($alquileres), $c['max']);
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -90,8 +89,6 @@ foreach ($_SESSION['clientesData'] as $c) {
             background: #FFD700;
             padding: 0.5rem 1rem;
             border-radius: 8px;
-            display: inline-block;
-            margin-bottom: 1rem;
         }
 
         a:hover {
@@ -103,21 +100,23 @@ foreach ($_SESSION['clientesData'] as $c) {
 <body>
     <h1>Bienvenido, <?= htmlspecialchars($_SESSION['usuario']); ?>!</h1>
 
-    <!-- Botón para añadir nuevo cliente -->
-    <a href="formCreateCliente.php">Añadir Nuevo Cliente</a>
-
     <h2>Listado de Clientes</h2>
+    <a href="formCreateCliente.php">Añadir Nuevo Cliente</a>
     <table>
         <tr>
             <th>Nombre</th>
             <th>Usuario</th>
             <th>Núm Soportes Alq</th>
+            <th>Acciones</th>
         </tr>
         <?php foreach ($clientes as $c): ?>
             <tr>
                 <td><?= htmlspecialchars($c->getNombre()); ?></td>
                 <td><?= htmlspecialchars($c->getUsuario()); ?></td>
                 <td><?= $c->getNumSoportesAlquilados(); ?></td>
+                <td>
+                    <a href="formUpdateCliente.php?usuario=<?= urlencode($c->getUsuario()); ?>">Editar</a>
+                </td>
             </tr>
         <?php endforeach; ?>
     </table>
