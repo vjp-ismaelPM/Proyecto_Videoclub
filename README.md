@@ -240,3 +240,4 @@ Este proyecto no incluye una licencia explícita en el repositorio. Añade una l
 
 Si necesitas que incluya instrucciones más detalladas (ej.: cómo añadir un conjunto inicial de soportes por defecto, ejemplos de uso o un script de inicialización), dime qué prefieres y lo añado.
 
+**© 2025 - Ismael Pablos Miguel & Aitor Trujillo Pablo**
