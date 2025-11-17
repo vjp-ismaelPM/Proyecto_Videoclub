@@ -1,4 +1,5 @@
 <?php
+// Incluimos las clases necesarias
 require_once(__DIR__ . '/../model/Cliente.php');
 require_once(__DIR__ . '/../model/Juego.php');
 require_once(__DIR__ . '/../model/Dvd.php');
@@ -11,12 +12,13 @@ use Dwes\ProyectoVideoclub\Model\CintaVideo;
 
 session_start();
 
+// Verificación de acceso: solo admin
 if (!isset($_SESSION['usuario']) || $_SESSION['usuario'] !== 'admin') {
     header("Location: ../../public/index.php");
     exit;
 }
 
-// Reconstruimos soportes
+// Reconstrucción de objetos Soporte desde datos en sesión
 $soportes = [];
 foreach ($_SESSION['soportesData'] as $s) {
     switch ($s['tipo']) {
@@ -32,7 +34,7 @@ foreach ($_SESSION['soportesData'] as $s) {
     }
 }
 
-// Reconstruimos clientes
+// Reconstrucción de objetos Cliente y sus alquileres
 $clientes = [];
 foreach ($_SESSION['clientesData'] as $c) {
     $alquileres = [];
@@ -51,55 +53,15 @@ foreach ($_SESSION['clientesData'] as $c) {
     <meta charset="UTF-8">
     <title>Videoclub - Admin</title>
     <style>
-        body {
-            font-family: sans-serif;
-            background: #222;
-            color: #f0f0f0;
-            padding: 2rem;
-        }
-
-        h1,
-        h2 {
-            color: #FFD700;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 2rem;
-        }
-
-        th,
-        td {
-            border: 1px solid #444;
-            padding: 0.5rem;
-        }
-
-        th {
-            background: #333;
-        }
-
-        tr:nth-child(even) {
-            background: #222;
-        }
-
-        a {
-            text-decoration: none;
-            color: #222;
-            background: #FFD700;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-        }
-
-        a:hover {
-            background: #ffcd00;
-        }
+        /* Estilos básicos para tablas, enlaces y cuerpo */
     </style>
 </head>
 
 <body>
+    <!-- Cabecera con saludo -->
     <h1>Bienvenido, <?= htmlspecialchars($_SESSION['usuario']); ?>!</h1>
 
+    <!-- Sección de clientes -->
     <h2>Listado de Clientes</h2>
     <a href="formCreateCliente.php">Añadir Nuevo Cliente</a>
     <table>
@@ -115,12 +77,15 @@ foreach ($_SESSION['clientesData'] as $c) {
                 <td><?= htmlspecialchars($c->getUsuario()); ?></td>
                 <td><?= $c->getNumSoportesAlquilados(); ?></td>
                 <td>
+                    <!-- Acciones de edición y eliminación -->
                     <a href="formUpdateCliente.php?usuario=<?= urlencode($c->getUsuario()); ?>">Editar</a>
+                    <a href="removeCliente.php?usuario=<?= urlencode($c->getUsuario()); ?>">Eliminar</a>
                 </td>
             </tr>
         <?php endforeach; ?>
     </table>
 
+    <!-- Sección de soportes -->
     <h2>Listado de Soportes</h2>
     <table>
         <tr>
@@ -135,6 +100,7 @@ foreach ($_SESSION['clientesData'] as $c) {
                 <td><?= htmlspecialchars($s->getTitulo()); ?></td>
                 <td><?= $s->getPrecio(); ?> €</td>
                 <td>
+                    <!-- Información específica según tipo de soporte -->
                     <?php
                     if ($s instanceof Juego) echo "Consola: " . $s->getConsola() . " (" . $s->getMinJugadores() . "-" . $s->getMaxJugadores() . " jugadores)";
                     elseif ($s instanceof Dvd) echo "Idiomas: " . $s->getIdiomas() . ", Formato: " . $s->getFormato();
@@ -145,6 +111,7 @@ foreach ($_SESSION['clientesData'] as $c) {
         <?php endforeach; ?>
     </table>
 
+    <!-- Enlace de cierre de sesión -->
     <a href="logout.php">Cerrar sesión</a>
 </body>
 

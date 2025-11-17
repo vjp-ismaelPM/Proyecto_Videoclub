@@ -41,7 +41,7 @@ $nuevoCliente = [
     'usuario' => $usuario,
     'password' => $password,
     'max' => $maxAlquileres,
-    'alquileres' => [] // vacío al inicio
+    'alquileres' => []
 ];
 
 // Añadimos a la sesión
