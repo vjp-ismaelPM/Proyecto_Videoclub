@@ -222,20 +222,6 @@ $vc->alquilarSocioProducto(1,1)->listarSocios();
 - Esta versión usa la sesión como almacenamiento temporal. Para producción deberías migrar a una base de datos y aplicar hashing de contraseñas (password_hash / password_verify).
 - Algunos métodos en las clases (por ejemplo en `Cliente.php` o `Videoclub.php`) están incompletos o representados de forma resumida; revisar e implementar según necesidades.
 
-
-## Contribuciones
-
-Si quieres contribuir:
-1. Haz un fork del repositorio
-2. Crea una rama con tu cambio
-3. Envía un pull request con una descripción clara de los cambios
-
-
-## Licencia
-
-Este proyecto no incluye una licencia explícita en el repositorio. Añade una licencia si vas a compartir el código públicamente.
-
-
 ---
 
 Si necesitas que incluya instrucciones más detalladas (ej.: cómo añadir un conjunto inicial de soportes por defecto, ejemplos de uso o un script de inicialización), dime qué prefieres y lo añado.
