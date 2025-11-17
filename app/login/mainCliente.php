@@ -51,9 +51,7 @@ $cliente = new Cliente($cData['nombre'], $cData['usuario'], $cData['password'], 
 <head>
     <meta charset="UTF-8">
     <title>Videoclub - Cliente</title>
-    <style>
-        /* Estilos básicos para tablas, enlaces y cuerpo */
-    </style>
+    <link rel="stylesheet" href="css/mainCliente.css">
 </head>
 
 <body>

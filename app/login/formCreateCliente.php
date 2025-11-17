@@ -13,62 +13,7 @@ if (!isset($_SESSION['usuario']) || $_SESSION['usuario'] !== 'admin') {
 <head>
     <meta charset="UTF-8">
     <title>Crear Cliente - Videoclub</title>
-    <style>
-        /* Estilos generales para el formulario y la página */
-        body {
-            font-family: sans-serif;
-            background: #222;
-            color: #f0f0f0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        h1,
-        h2 {
-            color: #FFD700;
-        }
-
-        form {
-            background: #333;
-            padding: 2rem;
-            border-radius: 8px;
-            width: 300px;
-        }
-
-        label {
-            display: block;
-            margin-top: 1rem;
-        }
-
-        input[type=text],
-        input[type=password],
-        input[type=number] {
-            width: 100%;
-            padding: 0.5rem;
-            margin-top: 0.3rem;
-            border-radius: 4px;
-            border: none;
-        }
-
-        input[type=submit],
-        a {
-            margin-top: 1rem;
-            text-decoration: none;
-            color: #222;
-            background: #FFD700;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            display: inline-block;
-        }
-
-        input[type=submit]:hover,
-        a:hover {
-            background: #ffcd00;
-        }
-    </style>
+    <link rel="stylesheet" href="css/createCliente.css">
 </head>
 
 <body>

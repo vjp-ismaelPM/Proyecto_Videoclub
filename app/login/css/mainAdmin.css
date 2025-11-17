@@ -1,0 +1,79 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #222;
+    color: #f0f0f0;
+    padding: 2rem;
+    margin: 0;
+}
+
+h1, h2 {
+    color: #FFD700;
+    margin-bottom: 1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    table-layout: fixed;
+}
+
+th, td {
+    border: 1px solid #444;
+    padding: 0.5rem;
+    text-align: left;
+    word-wrap: break-word;
+}
+
+th {
+    background: #333;
+}
+
+tr:nth-child(even) {
+    background: #222;
+}
+
+a {
+    display: inline-block;
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-weight: bold;
+    margin: 0.1rem;
+    transition: background 0.2s;
+}
+
+a.button-add {
+    background: #3498db;
+    color: #fff;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+a.button-add:hover {
+    background: #2980b9;
+}
+
+a.button-edit {
+    background: #27ae60;
+    color: #fff;
+}
+
+a.button-edit:hover {
+    background: #1e8449;
+}
+
+a.button-delete {
+    background: #e74c3c;
+    color: #fff;
+}
+
+a.button-delete:hover {
+    background: #c0392b;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}

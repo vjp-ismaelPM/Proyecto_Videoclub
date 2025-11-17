@@ -52,9 +52,7 @@ foreach ($_SESSION['clientesData'] as $c) {
 <head>
     <meta charset="UTF-8">
     <title>Videoclub - Admin</title>
-    <style>
-        /* Estilos básicos para tablas, enlaces y cuerpo */
-    </style>
+    <link rel="stylesheet" href="css/mainAdmin.css">
 </head>
 
 <body>
@@ -63,7 +61,7 @@ foreach ($_SESSION['clientesData'] as $c) {
 
     <!-- Sección de clientes -->
     <h2>Listado de Clientes</h2>
-    <a href="formCreateCliente.php">Añadir Nuevo Cliente</a>
+    <a class="button-add" href="formCreateCliente.php">Añadir Nuevo Cliente</a>
     <table>
         <tr>
             <th>Nombre</th>
@@ -78,8 +76,8 @@ foreach ($_SESSION['clientesData'] as $c) {
                 <td><?= $c->getNumSoportesAlquilados(); ?></td>
                 <td>
                     <!-- Acciones de edición y eliminación -->
-                    <a href="formUpdateCliente.php?usuario=<?= urlencode($c->getUsuario()); ?>">Editar</a>
-                    <a href="removeCliente.php?usuario=<?= urlencode($c->getUsuario()); ?>">Eliminar</a>
+                    <a class="button-edit" href="formUpdateCliente.php?usuario=<?= urlencode($c->getUsuario()); ?>">Editar</a>
+                    <a class="button-delete" href="removeCliente.php?usuario=<?= urlencode($c->getUsuario()); ?>">Eliminar</a>
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -112,7 +110,7 @@ foreach ($_SESSION['clientesData'] as $c) {
     </table>
 
     <!-- Enlace de cierre de sesión -->
-    <a href="logout.php">Cerrar sesión</a>
+    <a class="button-delete" href="logout.php">Cerrar sesión</a>
 </body>
 
 </html>
