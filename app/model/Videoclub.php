@@ -114,9 +114,9 @@ class Videoclub
      * @param string $nombre Es el nombre del nuevo socio
      * @param int $maxAlquileresConcurrentes Es el maximo de alquileres que puede tener de forma concurrente
      */
-    public function incluirSocio(string $nombre, int $maxAlquileresConcurrentes = 3)
+    public function incluirSocio(string $nombre, string $usuario, string $password, int $maxAlquileresConcurrentes = 3)
     {
-        $socio = new Cliente($nombre, ($this->numSocios), [], 0, $maxAlquileresConcurrentes);
+        $socio = new Cliente($nombre, $usuario, $password, ($this->numSocios), [], 0, $maxAlquileresConcurrentes);
         $this->socios[] = $socio;
         echo "<p>Inculido socio " . $this->numSocios . "</p>";
         $this->actuzalizarNumSocios();
