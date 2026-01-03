@@ -5,6 +5,10 @@ namespace Dwes\ProyectoVideoclub\Model;
 
 use Dwes\ProyectoVideoclub\Model\Util\CupoSuperadoException;
 use Dwes\ProyectoVideoclub\Model\Util\SoporteYaAlquiladoException;
+use Dwes\ProyectoVideoclub\Model\Util\SoporteNoEncontradoException;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Level;
 
 
 
@@ -23,7 +27,12 @@ class Videoclub
         private int $numSocios = 0,
         private int $numProductosAlquilados = 0,
         private int $numTotalAlquileres = 0,
-    ) {}
+    ) {
+        $this->logger = new Logger('VideoclubLogger');
+        $this->logger->pushHandler(new StreamHandler(__DIR__ . '/../../logs/videoclub.log', Level::Debug));
+    }
+
+    private Logger $logger;
 
     //GETTER
     public function getNumProductosAlquilados(): int
@@ -62,7 +71,7 @@ class Videoclub
     private function incluirProducto(Soporte $producto)
     {
         $this->productos[] = $producto;
-        echo "<p>Inculido producto " . $this->numProductos . "</p>";
+        $this->logger->info("Incluido producto " . $this->numProductos, ['numProductos' => $this->numProductos]);
         $this->actuzalizarNumProductos();
     }
 
@@ -116,9 +125,11 @@ class Videoclub
      */
     public function incluirSocio(string $nombre, int $maxAlquileresConcurrentes = 3)
     {
-        $socio = new Cliente($nombre, ($this->numSocios), [], 0, $maxAlquileresConcurrentes);
+        $user = strtolower(str_replace(' ', '', $nombre));
+        $password = '1234';
+        $socio = new Cliente($nombre, $user, $password, $this->numSocios, [], 0, $maxAlquileresConcurrentes);
         $this->socios[] = $socio;
-        echo "<p>Inculido socio " . $this->numSocios . "</p>";
+        $this->logger->info("Incluido socio " . $this->numSocios, ['numSocios' => $this->numSocios]);
         $this->actuzalizarNumSocios();
     }
 
@@ -127,10 +138,10 @@ class Videoclub
      */
     public function listarProductos()
     {
-        echo "<p>Listado de los " . $this->numProductos . " productos disponibles:</p>";
+        $this->logger->info("Listado de los " . $this->numProductos . " productos disponibles", ['numProductos' => $this->numProductos]);
         foreach ($this->productos as $producto) {
-            echo "<p>" . $producto->getNumero() . ".- ";
-            echo $producto->muestraResumen() . "</p>";
+            $this->logger->info("Producto " . $producto->getNumero(), ['numero' => $producto->getNumero()]);
+            $producto->muestraResumen();
         }
     }
 
@@ -139,12 +150,14 @@ class Videoclub
      */
     public function listarSocios()
     {
-        echo "<p>Listado de los " . $this->numSocios . " socios del videoclub:<br>";
+        $this->logger->info("Listado de los " . $this->numSocios . " socios del videoclub", ['numSocios' => $this->numSocios]);
         foreach ($this->socios as $socio) {
-            echo ($socio->getNumero() + 1) . ".- <strong>Cliente</strong> " . $socio->getNumero() . ": " . $socio->getNombre() . "<br>" .
-                "Alquileres actuales: " . $socio->getNumSoportesAlquilados() . "</br>";
+            $this->logger->info("Cliente " . $socio->getNumero() . ": " . $socio->getNombre(), [
+                'numero' => $socio->getNumero(),
+                'nombre' => $socio->getNombre(),
+                'alquileres' => $socio->getNumSoportesAlquilados()
+            ]);
         }
-        echo "</p>";
     }
 
     /**
@@ -162,12 +175,15 @@ class Videoclub
 
             try {
                 $socio->alquilar($producto);
-                echo "***  Alquilado soporte a: " . $socio->getNombre() . "***</p>";
+                $this->logger->info("Alquilado soporte a: " . $socio->getNombre(), [
+                    'socio' => $socio->getNombre(),
+                    'producto' => $producto->getTitulo()
+                ]);
             } catch (SoporteYaAlquiladoException | CupoSuperadoException $e) {
-                echo $e->getMessage();
+                $this->logger->info($e->getMessage());
             }
         } else {
-            echo "Introduce valores correctos";
+            $this->logger->info("Introduce valores correctos");
         }
 
         return $this;
@@ -183,7 +199,7 @@ class Videoclub
     {
         if ($numSocio < 0 || $numSocio >= $this->numSocios) {
 
-            echo "Número de socio: " . $numSocio . " no encontrado";
+            $this->logger->info("Número de socio: " . $numSocio . " no encontrado", ['numSocio' => $numSocio]);
             return;
         }
 
@@ -196,14 +212,14 @@ class Videoclub
 
             if ($numProducto < 0 || $numProducto >= $this->numProductos) {
 
-                echo "Número de soporte: " . $numProducto . " no encontrado";
+                $this->logger->info("Número de soporte: " . $numProducto . " no encontrado", ['numProducto' => $numProducto]);
                 $todosDisponibles = false;
                 break;
             }
 
             if ($this->productos[$numProducto]->alquilado) {
 
-                echo "El soorte " . $this->productos[$numProducto]->getTitulo() . " ya está alquilado";
+                $this->logger->info("El soporte " . $this->productos[$numProducto]->getTitulo() . " ya está alquilado", ['producto' => $this->productos[$numProducto]->getTitulo()]);
                 $todosDisponibles = false;
                 break;
             }
@@ -217,7 +233,10 @@ class Videoclub
                 $producto = $this->productos[$numProducto];
                 $socio->alquilar($producto);
                 $producto->alquilado = true;
-                echo "Soporte " . $producto->getTitulo() . "alquilado a " . $socio->getNombre();
+                $this->logger->info("Soporte " . $producto->getTitulo() . " alquilado a " . $socio->getNombre(), [
+                    'socio' => $socio->getNombre(),
+                    'producto' => $producto->getTitulo()
+                ]);
             }
         }
     }
@@ -233,13 +252,13 @@ class Videoclub
     {
         if ($numSocio < 0 || $numSocio >= $this->numSocios) {
 
-            echo "Número de socio: " . $numSocio . " no encontrado";
+            $this->logger->info("Número de socio: " . $numSocio . " no encontrado", ['numSocio' => $numSocio]);
             return $this;
         }
 
         if ($numProducto < 0 || $numProducto >= $this->numProductos) {
 
-            echo "Número de soporte: " . $numProducto . " no encontrado";
+            $this->logger->info("Número de soporte: " . $numProducto . " no encontrado", ['numProducto' => $numProducto]);
             return $this;
         }
 
@@ -247,13 +266,18 @@ class Videoclub
         $producto = $this->productos[$numProducto];
 
         // Intentar devolver el soporte
-        if ($socio->devolver($numProducto)) {
-
+        try {
+            $socio->devolver($numProducto);
             $producto->alquilado = false; // marcar como no alquilado
-            echo "El soporte " . $producto->getTitulo() . " ha sido devuelto por " . $socio->getNombre();
-        } else {
-
-            echo "El socio " . $socio->getNombre() . " no tenía alquilado el soporte " . $producto->getTitulo();
+            $this->logger->info("El soporte " . $producto->getTitulo() . " ha sido devuelto por " . $socio->getNombre(), [
+                'socio' => $socio->getNombre(),
+                'producto' => $producto->getTitulo()
+            ]);
+        } catch (SoporteNoEncontradoException $e) {
+            $this->logger->info("El socio " . $socio->getNombre() . " no tenía alquilado el soporte " . $producto->getTitulo(), [
+                'socio' => $socio->getNombre(),
+                'producto' => $producto->getTitulo()
+            ]);
         }
 
         return $this;
@@ -269,7 +293,7 @@ class Videoclub
     {
         if ($numSocio < 0 || $numSocio >= $this->numSocios) {
 
-            echo "Número de socio: " . $numSocio . " no encontrado";
+            $this->logger->info("Número de socio: " . $numSocio . " no encontrado", ['numSocio' => $numSocio]);
             return $this;
         }
 
@@ -282,19 +306,24 @@ class Videoclub
 
             if ($numProducto < 0 || $numProducto >= $this->numProductos) {
 
-                echo "Número de sopote" . $numProducto . " no encontrado";
+                $this->logger->info("Número de soporte: " . $numProducto . " no encontrado", ['numProducto' => $numProducto]);
                 continue; // pasa al siguiente
             }
 
             $producto = $this->productos[$numProducto];
 
-            if ($socio->devolver($numProducto)) {
-
+            try {
+                $socio->devolver($numProducto);
                 $producto->alquilado = false;
-                echo "El soporte " . $producto->getTitulo() . " devuelto por " . $socio->getNombre();
-            } else {
-
-                echo "El socio " . $socio->getNombre() . " no tenía alquilado el soporte " . $producto->getTitulo();
+                $this->logger->info("El soporte " . $producto->getTitulo() . " devuelto por " . $socio->getNombre(), [
+                    'socio' => $socio->getNombre(),
+                    'producto' => $producto->getTitulo()
+                ]);
+            } catch (SoporteNoEncontradoException $e) {
+                $this->logger->info("El socio " . $socio->getNombre() . " no tenía alquilado el soporte " . $producto->getTitulo(), [
+                    'socio' => $socio->getNombre(),
+                    'producto' => $producto->getTitulo()
+                ]);
             }
         }
 
