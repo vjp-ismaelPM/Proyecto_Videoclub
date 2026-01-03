@@ -6,15 +6,15 @@ namespace Dwes\ProyectoVideoclub\Model;
 use Dwes\ProyectoVideoclub\Model\Util\CupoSuperadoException;
 use Dwes\ProyectoVideoclub\Model\Util\SoporteNoEncontradoException;
 use Dwes\ProyectoVideoclub\Model\Util\SoporteYaAlquiladoException;
-use Monolog\Logger;
 use Dwes\ProyectoVideoclub\Util\LogFactory;
+use Psr\Log\LoggerInterface;
 
 
 
 
 class Cliente{
         
-    private Logger $logger;
+    private LoggerInterface $logger;
 
 //CONSTRUCTOR
     public function __construct(
@@ -26,8 +26,7 @@ class Cliente{
         private int $numSoportesAlquilados = 0,
         private int $maxAlquilerConcurrente = 3,
     ){
-        $this->logger = new Logger('VideoclubLogger');
-        $this->logger->pushHandler(new StreamHandler(__DIR__ . '/../../logs/videoclub.log', Level::Debug));
+        $this->logger = LogFactory::getLogger();
     }
 
 

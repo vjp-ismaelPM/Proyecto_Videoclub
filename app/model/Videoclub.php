@@ -7,7 +7,7 @@ use Dwes\ProyectoVideoclub\Model\Util\CupoSuperadoException;
 use Dwes\ProyectoVideoclub\Model\Util\SoporteYaAlquiladoException;
 use Dwes\ProyectoVideoclub\Model\Util\SoporteNoEncontradoException;
 use Dwes\ProyectoVideoclub\Util\LogFactory;
-use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 
 
 
@@ -30,7 +30,7 @@ class Videoclub
         $this->logger = LogFactory::getLogger();
     }
 
-    private Logger $logger;
+    private LoggerInterface $logger;
 
     //GETTER
     public function getNumProductosAlquilados(): int
