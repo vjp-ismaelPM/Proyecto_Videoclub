@@ -6,11 +6,16 @@ namespace Dwes\ProyectoVideoclub\Model;
 use Dwes\ProyectoVideoclub\Model\Util\CupoSuperadoException;
 use Dwes\ProyectoVideoclub\Model\Util\SoporteNoEncontradoException;
 use Dwes\ProyectoVideoclub\Model\Util\SoporteYaAlquiladoException;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Level;
 
 
 
 class Cliente{
         
+    private Logger $logger;
+
 //CONSTRUCTOR
     public function __construct(
         private string $nombre = "",
@@ -20,7 +25,10 @@ class Cliente{
         private array $soportesAlquilados = [],
         private int $numSoportesAlquilados = 0,
         private int $maxAlquilerConcurrente = 3,
-    ){}
+    ){
+        $this->logger = new Logger('VideoclubLogger');
+        $this->logger->pushHandler(new StreamHandler(__DIR__ . '/../../logs/videoclub.log', Level::Debug));
+    }
 
 
 
@@ -101,15 +109,17 @@ class Cliente{
                 $this->soportesAlquilados[] = $s;
                 $s->alquilado=true;
                 $this->actualizarNumSoportesAlquilados();
-                echo "<p><strong>Alquilado soporte a: </strong>" . $this->nombre . "</p>";
+                $this->logger->info("Alquilado soporte a: " . $this->nombre);
                 $s->muestraResumen();
 
             }else{
+                $this->logger->warning("El cliente " . $this->nombre . " ha superado el cupo de alquileres.");
                 throw new CupoSuperadoException("<p>Este cliente (<strong>" . $this->nombre . "</strong>) tiene " . $this->getNumSoportesAlquilados() . " elementos alquilados. No puede alquilar más en este videoclub hasta que no devuelva algo</p>");
                
             }
 
         }else{
+                $this->logger->warning("El cliente " . $this->nombre . " ya tiene alquilado el soporte " . $s->getTitulo());
                 throw new SoporteYaAlquiladoException("<p>El cliente ya tiene alquilado el soporte <strong>" . $s->getTitulo() . "</strong></p>");
         }
 
@@ -129,8 +139,9 @@ class Cliente{
                 unset($this->soportesAlquilados[$numSoporte]);
                 $this->soportesAlquilados = array_values($this->soportesAlquilados);
                 $this->actualizarNumSoportesAlquilados();
-                echo "<p>Se ha devuelto el soporte seleccionado (" . $soporteAux->getTitulo() . ")</p>";
+                $this->logger->info("Se ha devuelto el soporte seleccionado (" . $soporteAux->getTitulo() . ")");
         }else{
+                $this->logger->warning("No se ha podido encontrar el soporte en los alquileres de este cliente (" . $this->nombre . ")");
                 throw new SoporteNoEncontradoException("<p>No se ha podido encontrar el soporte en los alquileres de este cliente(<strong>" . $this->nombre . "</strong>)</p>");       
         }
 
@@ -142,13 +153,13 @@ class Cliente{
      */
     public function listarAlquileres(){
         if($this->numSoportesAlquilados != 0){
-            echo "<p><strong>El cliente(" . $this->nombre . ") tiene " . $this->numSoportesAlquilados . " soportes alquilados</strong></p>";
+            $this->logger->info("El cliente(" . $this->nombre . ") tiene " . $this->numSoportesAlquilados . " soportes alquilados");
             foreach($this->soportesAlquilados as $soporte){
                 
-                echo "<p>" . $soporte->muestraResumen() . "</p>";
+                $soporte->muestraResumen();
             }
         }else{
-            echo "<p>Este cliente(" . $this->nombre . ") no tiene alquilado ningún elemento</p>";
+            $this->logger->info("Este cliente(" . $this->nombre . ") no tiene alquilado ningún elemento");
         }
     }
 }
