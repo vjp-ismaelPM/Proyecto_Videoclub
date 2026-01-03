@@ -3,7 +3,7 @@
 namespace Dwes\ProyectoVideoclub\Model;
 
 
-include_once(__DIR__ . '/../../autoload.php');
+
 
 class Juego extends Soporte
 {

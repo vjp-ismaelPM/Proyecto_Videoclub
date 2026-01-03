@@ -6,7 +6,7 @@ namespace Dwes\ProyectoVideoclub\Model;
 use Dwes\ProyectoVideoclub\Model\Util\CupoSuperadoException;
 use Dwes\ProyectoVideoclub\Model\Util\SoporteYaAlquiladoException;
 
-include_once(__DIR__ . '/../../autoload.php');
+
 
 
 class Videoclub
