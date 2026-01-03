@@ -7,8 +7,8 @@ use Dwes\ProyectoVideoclub\Model\Util\CupoSuperadoException;
 use Dwes\ProyectoVideoclub\Model\Util\SoporteNoEncontradoException;
 use Dwes\ProyectoVideoclub\Model\Util\SoporteYaAlquiladoException;
 use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-use Monolog\Level;
+use Dwes\ProyectoVideoclub\Util\LogFactory;
+
 
 
 

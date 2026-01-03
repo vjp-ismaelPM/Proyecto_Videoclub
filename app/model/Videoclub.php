@@ -6,9 +6,8 @@ namespace Dwes\ProyectoVideoclub\Model;
 use Dwes\ProyectoVideoclub\Model\Util\CupoSuperadoException;
 use Dwes\ProyectoVideoclub\Model\Util\SoporteYaAlquiladoException;
 use Dwes\ProyectoVideoclub\Model\Util\SoporteNoEncontradoException;
+use Dwes\ProyectoVideoclub\Util\LogFactory;
 use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-use Monolog\Level;
 
 
 
@@ -28,8 +27,7 @@ class Videoclub
         private int $numProductosAlquilados = 0,
         private int $numTotalAlquileres = 0,
     ) {
-        $this->logger = new Logger('VideoclubLogger');
-        $this->logger->pushHandler(new StreamHandler(__DIR__ . '/../../logs/videoclub.log', Level::Debug));
+        $this->logger = LogFactory::getLogger();
     }
 
     private Logger $logger;
