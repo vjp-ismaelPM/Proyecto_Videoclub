@@ -12,12 +12,28 @@ use Psr\Log\LoggerInterface;
 
 
 
+/**
+ * Clase que representa el videoclub.
+ * 
+ * @package Dwes\ProyectoVideoclub\Model
+ */
 class Videoclub
 {
 
 
 
     //CONSTRUCTOR
+    /**
+     * Constructor de la clase Videoclub.
+     * 
+     * @param string $nombre Nombre del videoclub.
+     * @param array $productos Lista de productos disponibles.
+     * @param int $numProductos Número total de productos.
+     * @param array $socios Lista de socios registrados.
+     * @param int $numSocios Número total de socios.
+     * @param int $numProductosAlquilados Número de productos actualmente alquilados.
+     * @param int $numTotalAlquileres Histórico total de alquileres.
+     */
     public function __construct(
         private string $nombre = "",
         private array $productos = [],
@@ -33,11 +49,21 @@ class Videoclub
     private LoggerInterface $logger;
 
     //GETTER
+    /**
+     * Obtiene el número de productos alquilados actualmente.
+     * 
+     * @return int Número de productos alquilados.
+     */
     public function getNumProductosAlquilados(): int
     {
         return $this->numProductosAlquilados;
     }
 
+    /**
+     * Obtiene el número total de alquileres realizados.
+     * 
+     * @return int Número total de alquileres.
+     */
     public function getNumTotalAlquileres(): int
     {
         return $this->numTotalAlquileres;
@@ -46,7 +72,9 @@ class Videoclub
     //METODOS 
 
     /**
-     * Metodo para actualizar el numero de productos
+     * Actualiza el contador interno de productos.
+     * 
+     * @return void
      */
     public function actuzalizarNumProductos()
     {
@@ -54,7 +82,9 @@ class Videoclub
     }
 
     /**
-     * Metodo para actualizar el numero de socios
+     * Actualiza el contador interno de socios.
+     * 
+     * @return void
      */
     public function actuzalizarNumSocios()
     {
@@ -62,9 +92,10 @@ class Videoclub
     }
 
     /**
-     * Metodo para incluir un producto a la lista de productos
+     * Incluye un producto de forma interna en la lista de productos del videoclub.
      * 
-     * @param Soporte $producto Es el producto que se aniadir a la lista productos
+     * @param Soporte $producto Producto a añadir.
+     * @return void
      */
     private function incluirProducto(Soporte $producto)
     {
@@ -74,11 +105,12 @@ class Videoclub
     }
 
     /**
-     * Metodo para incluir una cinta de video en la lista de productos
+     * Crea e incluye una nueva cinta de video en el catálogo.
      * 
-     * @param string $titulo El titulo de la cinta de video
-     * @param float $precio El precio de la cinta
-     * @param int $duracion la duracion en minutos de la cinta 
+     * @param string $titulo Título de la película.
+     * @param float $precio Precio de alquiler.
+     * @param int $duracion Duración en minutos.
+     * @return void
      */
     public function incluirCintaVideo(string $titulo, float $precio, int $duracion)
     {
@@ -87,12 +119,13 @@ class Videoclub
     }
 
     /**
-     * Metodo para incluir un DVD en la lista de productos
+     * Crea e incluye un nuevo DVD en el catálogo.
      * 
-     * @param string $titulo El titulo del DVD
-     * @param float $precio El precio del DVD
-     * @param string $idiomas Los idiomas en los que esta el DVD
-     * @param string $pantalla La resolucion en pantalla del DVD
+     * @param string $titulo Título de la película.
+     * @param float $precio Precio de alquiler.
+     * @param string $idimoas Idiomas disponibles.
+     * @param string $pantalla Formato de pantalla.
+     * @return void
      */
     public function incluirDvd(string $titulo, float $precio, string $idimoas, string $pantalla)
     {
@@ -101,13 +134,14 @@ class Videoclub
     }
 
     /**
-     * Metodo para incluir un juego en la lista de productos
+     * Crea e incluye un nuevo juego en el catálogo.
      * 
-     * @param string $titulo El titulo del juego
-     * @param float $precio El precio del juego
-     * @param string $consola El nombre de la consola con la que se puede jugar al juego
-     * @param int $min El minimo de jugadores
-     * @param int $max El maximo de jugadores
+     * @param string $titulo Título del videojuego.
+     * @param float $precio Precio de alquiler.
+     * @param string $consola Consola compatible.
+     * @param int $min Número mínimo de jugadores.
+     * @param int $max Número máximo de jugadores.
+     * @return void
      */
     public function incluirJuego(string $titulo, float $precio, string $consola, int $min, int $max)
     {
@@ -116,10 +150,11 @@ class Videoclub
     }
 
     /**
-     * Metodo para incluir un socio a la lista de socios
+     * Incluye un nuevo socio en el videoclub.
      * 
-     * @param string $nombre Es el nombre del nuevo socio
-     * @param int $maxAlquileresConcurrentes Es el maximo de alquileres que puede tener de forma concurrente
+     * @param string $nombre Nombre del nuevo socio.
+     * @param int $maxAlquileresConcurrentes Máximo de alquileres permitidos para este socio.
+     * @return void
      */
     public function incluirSocio(string $nombre, int $maxAlquileresConcurrentes = 3)
     {
@@ -132,7 +167,9 @@ class Videoclub
     }
 
     /**
-     * Metodo para listar todos los productos
+     * Lista por pantalla todos los productos disponibles en el videoclub.
+     * 
+     * @return void
      */
     public function listarProductos()
     {
@@ -144,7 +181,9 @@ class Videoclub
     }
 
     /**
-     * Metodo para listar todos los socios
+     * Lista por pantalla todos los socios registrados en el videoclub.
+     * 
+     * @return void
      */
     public function listarSocios()
     {
@@ -159,10 +198,11 @@ class Videoclub
     }
 
     /**
-     * Metodo para que un cliente alquile un soporte
+     * Alquila un producto a un socio.
      * 
-     * @param int $numCliente el numero del cliente
-     * @param int $numSoporte el numero del soporte
+     * @param int $numCliente Número del socio.
+     * @param int $numSoporte Número del producto.
+     * @return self
      */
     public function alquilarSocioProducto(int $numCliente, int $numSoporte)
     {
@@ -188,10 +228,11 @@ class Videoclub
     }
 
     /**
-     * Metodo para que un cliente alquile varios soportes
+     * Alquila varios productos a un socio.
      * 
-     * @param int $numSocio El número del cliente
-     * @param array $numerosProductos Array con los números de los soportes a alquilar
+     * @param int $numSocio Número del socio.
+     * @param array $numerosProductos Array con los números de los productos a alquilar.
+     * @return void
      */
     public function alquilarSocioProductos(int $numSocio, array $numerosProductos): void
     {
@@ -240,12 +281,12 @@ class Videoclub
     }
 
     /**
-     * Metodo para que un cliente devuelva un soporte
+     * Devuelve un producto alquilado por un socio.
      * 
-     * @param int $numSocio El número del socio que devuelve el soporte
-     * @param int $numProducto El número del soporte a devolver
+     * @param int $numSocio Número del socio.
+     * @param int $numProducto Número del producto.
+     * @return self
      */
-
     public function devolverSocioProducto(int $numSocio, int $numProducto): self
     {
         if ($numSocio < 0 || $numSocio >= $this->numSocios) {
@@ -282,10 +323,11 @@ class Videoclub
     }
 
     /**
-     * Metodo para que un cliente devuelva varios soportes
+     * Devuelve varios productos alquilados por un socio.
      * 
-     * @param int $numSocio El número del socio que devuelve los soportes
-     * @param array $numerosProductos Array con los números de los soportes a devolver
+     * @param int $numSocio Número del socio.
+     * @param array $numerosProductos Array con los números de los productos a devolver.
+     * @return self
      */
     public function devolverSocioProductos(int $numSocio, array $numerosProductos): self
     {

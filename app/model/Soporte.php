@@ -1,51 +1,79 @@
-<?php 
+<?php
+
 namespace Dwes\ProyectoVideoclub\Model;
 
-
-
-abstract class Soporte implements Resumible{
+/**
+ * Clase abstracta Soporte que representa un producto del videoclub.
+ * 
+ * @package Dwes\ProyectoVideoclub\Model
+ */
+abstract class Soporte
+{
+    /**
+     * @var float IVA aplicado a los productos
+     */
     private const IVA = 0.21;
-    
-//CONSTRUCTOR
-    public function __construct(
-        private string $titulo = "",
-        private int $numero = 0,
-        private float $precio = 0,
-        public bool $alquilado = false
-    ) {}
 
-//GETTERS
-    public function getTitulo(){
-        return $this->titulo;
+    /**
+     * Constructor de la clase Soporte.
+     * 
+     * @param string $titulo Título del soporte.
+     * @param int $numero Número identificador único del soporte en el videoclub.
+     * @param float $precio Precio base de alquiler (sin IVA).
+     * @param bool $alquilado Indica si el soporte está actualmente alquilado. Por defecto es false.
+     */
+    public function __construct(
+        public string $titulo,
+        protected int $numero,
+        private float $precio,
+        public bool $alquilado = false
+    ) {
     }
-    
-    public function getNumero(){
-        return $this->numero;
-    }
-   
-    public function getPrecio(){
+
+    /**
+     * Obtiene el precio base del producto
+     * @return float Precio base
+     */
+    public function getPrecio(): float
+    {
         return $this->precio;
     }
 
-//METODOS
-
     /**
-     * Metodo que devuelve el precio con el IVA incluido
+     * Obtiene el precio del producto con IVA incluido
+     * @return float Precio con IVA
      */
-    public function getPrecioConIva(){
+    public function getPrecioConIva(): float
+    {
         return $this->precio * (1 + self::IVA);
     }
 
     /**
-     * Metodo que muestra un resumen de los datos del soporte, no hace falta que lo implemeten los hijos
-     * ya que heredan de soporte
+     * Obtiene el número identificador del producto
+     * @return int Número
      */
-     public function muestraResumen(){
-        echo
-            '<strong>' . $this->titulo . '</strong><br>' . $this->precio . ' (IVA no incluido)'
-        ;
+    public function getNumero(): int
+    {
+        return $this->numero;
     }
 
-}
+    /**
+     * Obtiene el título del producto
+     * @return string Título
+     */
+    public function getTitulo(): string
+    {
+        return $this->titulo;
+    }
 
-?>
+    /**
+     * Muestra por pantalla un resumen de los datos del producto (título y precio base).
+     * 
+     * @return void
+     */
+    public function muestraResumen()
+    {
+        echo "<strong>" . $this->titulo . "</strong><br>";
+        echo "Precio: " . $this->precio . " € (IVA no incluido)<br>";
+    }
+}

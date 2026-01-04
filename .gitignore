@@ -1,7 +1,19 @@
+# Composer
 vendor/
+composer.lock
+
+# Environment and Logs
 .env
 *.log
+logs/
+
+# IDEs and OS
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
+
+# phpDocumentor
+docs/
+.phpdoc/
+ast.dump
