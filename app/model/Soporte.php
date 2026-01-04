@@ -21,12 +21,14 @@ abstract class Soporte
      * @param int $numero Número identificador único del soporte en el videoclub.
      * @param float $precio Precio base de alquiler (sin IVA).
      * @param bool $alquilado Indica si el soporte está actualmente alquilado. Por defecto es false.
+     * @param string $metacritic URL de Metacritic del soporte.
      */
     public function __construct(
-        public string $titulo,
+        private string $titulo,
         protected int $numero,
         private float $precio,
-        public bool $alquilado = false
+        private bool $alquilado = false,
+        protected string $metacritic = ""
     ) {
     }
 
@@ -64,6 +66,34 @@ abstract class Soporte
     public function getTitulo(): string
     {
         return $this->titulo;
+    }
+
+    /**
+     * Obtiene la URL de Metacritic del producto
+     * @return string URL de Metacritic
+     */
+    public function getMetacritic(): string
+    {
+        return $this->metacritic;
+    }
+
+    /**
+     * Obtiene el estado de alquiler del producto
+     * @return bool True si está alquilado, false en caso contrario
+     */
+    public function getAlquilado(): bool
+    {
+        return $this->alquilado;
+    }
+
+    /**
+     * Establece el estado de alquiler del producto
+     * @param bool $alquilado Nuevo estado de alquiler
+     * @return void
+     */
+    public function setAlquilado(bool $alquilado): void
+    {
+        $this->alquilado = $alquilado;
     }
 
     /**

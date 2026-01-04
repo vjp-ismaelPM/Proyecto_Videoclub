@@ -23,15 +23,17 @@ class Dvd extends Soporte
      * @param float $precio Precio base de alquiler.
      * @param string $idiomas Lista de idiomas disponibles en el DVD.
      * @param string $formatPantalla Formato de visualización de pantalla.
+     * @param string $metacritic URL de Metacritic.
      */
     public function __construct(
-        private string $titulo = "",
-        private int $numero = 0,
-        private float $precio = 0,
+        string $titulo = "",
+        int $numero = 0,
+        float $precio = 0,
         private String $idiomas = "",
         private String $formatPantalla = "",
+        string $metacritic = ""
     ) {
-        parent::__construct($titulo, $numero, $precio);
+        parent::__construct($titulo, $numero, $precio, false, $metacritic);
     }
 
     //GETTERS & SETTERS

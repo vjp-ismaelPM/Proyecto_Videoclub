@@ -1,7 +1,7 @@
 <?php
-// Iniciamos sesión y cargamos la clase Cliente
+// Iniciamos sesión y cargamos el autoloader de Composer
 session_start();
-require_once(__DIR__ . '/../model/Cliente.php');
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 use Dwes\ProyectoVideoclub\Model\Cliente;
 

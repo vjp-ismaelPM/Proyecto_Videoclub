@@ -154,7 +154,7 @@ class Cliente{
             if($this->getNumSoportesAlquilados() < $this->maxAlquilerConcurrente){
 
                 $this->soportesAlquilados[] = $s;
-                $s->alquilado=true;
+                $s->setAlquilado(true);
                 $this->actualizarNumSoportesAlquilados();
                 $this->logger->info("Alquilado soporte a: " . $this->nombre);
                 $s->muestraResumen();
@@ -183,7 +183,7 @@ class Cliente{
     public function devolver(int $numSoporte){
         if($numSoporte < $this->numSoportesAlquilados){
                 $soporteAux = $this->soportesAlquilados[$numSoporte];
-                $soporteAux->alquilado = false;
+                $soporteAux->setAlquilado(false);
                 unset($this->soportesAlquilados[$numSoporte]);
                 $this->soportesAlquilados = array_values($this->soportesAlquilados);
                 $this->actualizarNumSoportesAlquilados();

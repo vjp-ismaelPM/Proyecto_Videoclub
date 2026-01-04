@@ -24,16 +24,18 @@ class Juego extends Soporte
      * @param string $consola Nombre de la consola para la que es el juego.
      * @param int $minJugadores Número mínimo de jugadores permitidos.
      * @param int $maxJugadores Número máximo de jugadores permitidos.
+     * @param string $metacritic URL de Metacritic.
      */
     public function __construct(
-        private string $titulo = "",
-        private int $numero = 0,
-        private float $precio = 0,
+        string $titulo = "",
+        int $numero = 0,
+        float $precio = 0,
         private String $consola = "",
         private int $minJugadores = 0,
         private int $maxJugadores = 0,
+        string $metacritic = ""
     ) {
-        parent::__construct($titulo, $numero, $precio);
+        parent::__construct($titulo, $numero, $precio, false, $metacritic);
     }
 
     //GETTERS & SETTERS

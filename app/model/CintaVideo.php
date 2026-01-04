@@ -21,14 +21,16 @@ class CintaVideo extends Soporte
      * @param int $numero Número identificador único.
      * @param float $precio Precio base de alquiler.
      * @param int $duracion Duración de la película en minutos.
+     * @param string $metacritic URL de Metacritic.
      */
     public function __construct(
-        private string $titulo = "",
-        private int $numero = 0,
-        private float $precio = 0,
-        private int $duracion = 0
+        string $titulo = "",
+        int $numero = 0,
+        float $precio = 0,
+        private int $duracion = 0,
+        string $metacritic = ""
     ) {
-        parent::__construct($titulo, $numero, $precio);
+        parent::__construct($titulo, $numero, $precio, false, $metacritic);
     }
 
     //GETTERS & SETTERS

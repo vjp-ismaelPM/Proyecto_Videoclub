@@ -107,35 +107,38 @@ class Videoclub
     /**
      * Crea e incluye una nueva cinta de video en el catálogo.
      * 
+     * @param string $urlMetacritic URL de Metacritic del soporte.
      * @param string $titulo Título de la película.
      * @param float $precio Precio de alquiler.
      * @param int $duracion Duración en minutos.
      * @return void
      */
-    public function incluirCintaVideo(string $titulo, float $precio, int $duracion)
+    public function incluirCintaVideo(string $urlMetacritic, string $titulo, float $precio, int $duracion)
     {
-        $producto = new CintaVideo($titulo, ($this->numProductos), $precio, $duracion);
+        $producto = new CintaVideo($titulo, ($this->numProductos), $precio, $duracion, $urlMetacritic);
         $this->incluirProducto($producto);
     }
 
     /**
      * Crea e incluye un nuevo DVD en el catálogo.
      * 
+     * @param string $urlMetacritic URL de Metacritic del soporte.
      * @param string $titulo Título de la película.
      * @param float $precio Precio de alquiler.
      * @param string $idimoas Idiomas disponibles.
      * @param string $pantalla Formato de pantalla.
      * @return void
      */
-    public function incluirDvd(string $titulo, float $precio, string $idimoas, string $pantalla)
+    public function incluirDvd(string $urlMetacritic, string $titulo, float $precio, string $idimoas, string $pantalla)
     {
-        $producto = new Dvd($titulo, ($this->numProductos), $precio, $idimoas, $pantalla);
+        $producto = new Dvd($titulo, ($this->numProductos), $precio, $idimoas, $pantalla, $urlMetacritic);
         $this->incluirProducto($producto);
     }
 
     /**
      * Crea e incluye un nuevo juego en el catálogo.
      * 
+     * @param string $urlMetacritic URL de Metacritic del soporte.
      * @param string $titulo Título del videojuego.
      * @param float $precio Precio de alquiler.
      * @param string $consola Consola compatible.
@@ -143,9 +146,9 @@ class Videoclub
      * @param int $max Número máximo de jugadores.
      * @return void
      */
-    public function incluirJuego(string $titulo, float $precio, string $consola, int $min, int $max)
+    public function incluirJuego(string $urlMetacritic, string $titulo, float $precio, string $consola, int $min, int $max)
     {
-        $producto = new Juego($titulo, ($this->numProductos), $precio, $consola, $min, $max);
+        $producto = new Juego($titulo, ($this->numProductos), $precio, $consola, $min, $max, $urlMetacritic);
         $this->incluirProducto($producto);
     }
 
@@ -188,12 +191,14 @@ class Videoclub
     public function listarSocios()
     {
         $this->logger->info("Listado de los " . $this->numSocios . " socios del videoclub", ['numSocios' => $this->numSocios]);
+        echo "<p>Listado de los " . $this->numSocios . " socios del videoclub</p>";
         foreach ($this->socios as $socio) {
             $this->logger->info("Cliente " . $socio->getNumero() . ": " . $socio->getNombre(), [
                 'numero' => $socio->getNumero(),
                 'nombre' => $socio->getNombre(),
                 'alquileres' => $socio->getNumSoportesAlquilados()
             ]);
+            echo "<p>Cliente " . $socio->getNumero() . ": " . $socio->getNombre() . " (" . $socio->getNumSoportesAlquilados() . " alquileres)</p>";
         }
     }
 
@@ -256,7 +261,7 @@ class Videoclub
                 break;
             }
 
-            if ($this->productos[$numProducto]->alquilado) {
+            if ($this->productos[$numProducto]->getAlquilado()) {
 
                 $this->logger->info("El soporte " . $this->productos[$numProducto]->getTitulo() . " ya está alquilado", ['producto' => $this->productos[$numProducto]->getTitulo()]);
                 $todosDisponibles = false;
@@ -271,7 +276,7 @@ class Videoclub
                 $numProducto = $numerosProductos[$i];
                 $producto = $this->productos[$numProducto];
                 $socio->alquilar($producto);
-                $producto->alquilado = true;
+                $producto->setAlquilado(true);
                 $this->logger->info("Soporte " . $producto->getTitulo() . " alquilado a " . $socio->getNombre(), [
                     'socio' => $socio->getNombre(),
                     'producto' => $producto->getTitulo()
@@ -307,7 +312,7 @@ class Videoclub
         // Intentar devolver el soporte
         try {
             $socio->devolver($numProducto);
-            $producto->alquilado = false; // marcar como no alquilado
+            $producto->setAlquilado(false); // marcar como no alquilado
             $this->logger->info("El soporte " . $producto->getTitulo() . " ha sido devuelto por " . $socio->getNombre(), [
                 'socio' => $socio->getNombre(),
                 'producto' => $producto->getTitulo()
@@ -354,7 +359,7 @@ class Videoclub
 
             try {
                 $socio->devolver($numProducto);
-                $producto->alquilado = false;
+                $producto->setAlquilado(false);
                 $this->logger->info("El soporte " . $producto->getTitulo() . " devuelto por " . $socio->getNombre(), [
                     'socio' => $socio->getNombre(),
                     'producto' => $producto->getTitulo()

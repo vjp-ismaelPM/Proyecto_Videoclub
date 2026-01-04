@@ -1,9 +1,6 @@
 <?php
-// Incluimos las clases necesarias
-require_once(__DIR__ . '/../model/Cliente.php');
-require_once(__DIR__ . '/../model/Juego.php');
-require_once(__DIR__ . '/../model/Dvd.php');
-require_once(__DIR__ . '/../model/CintaVideo.php');
+// Incluimos el autoloader de Composer
+require_once(__DIR__ . '/../../vendor/autoload.php');
 
 use Dwes\ProyectoVideoclub\Model\Cliente;
 use Dwes\ProyectoVideoclub\Model\Juego;

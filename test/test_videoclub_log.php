@@ -12,8 +12,8 @@ if (file_exists($logFile)) {
 $vc = new Videoclub("Videoclub Test");
 
 echo "Adding products...\n";
-$vc->incluirJuego("God of War", 19.99, "PS4", 1, 1); 
-$vc->incluirDvd("Torrente", 4.5, "es","16:9"); 
+$vc->incluirJuego("", "God of War", 19.99, "PS4", 1, 1); 
+$vc->incluirDvd("", "Torrente", 4.5, "es","16:9"); 
 
 echo "Adding partners...\n";
 $vc->incluirSocio("Amancio Ortega"); 
