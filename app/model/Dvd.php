@@ -72,4 +72,17 @@ class Dvd extends Soporte
         '<br>Idiomas: ' . $this->idiomas .
             '<br>Formato Pantalla: ' . $this->formatPantalla;;
     }
+
+    /**
+     * Obtiene la puntuación de Metacritic mediante web scraping.
+     * 
+     * @return int|null Puntuación de Metacritic o null si no está disponible.
+     */
+    public function getPuntuacion(): ?int
+    {
+        if (empty($this->metacritic)) {
+            return null;
+        }
+        return \Dwes\ProyectoVideoclub\Util\MetacriticScraper::getMetascore($this->metacritic);
+    }
 }

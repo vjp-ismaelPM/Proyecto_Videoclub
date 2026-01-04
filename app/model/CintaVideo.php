@@ -58,4 +58,17 @@ class CintaVideo extends Soporte
         parent::muestraResumen();
         echo '<br>Duración: ' . $this->duracion . " minutos";
     }
+
+    /**
+     * Obtiene la puntuación de Metacritic mediante web scraping.
+     * 
+     * @return int|null Puntuación de Metacritic o null si no está disponible.
+     */
+    public function getPuntuacion(): ?int
+    {
+        if (empty($this->metacritic)) {
+            return null;
+        }
+        return \Dwes\ProyectoVideoclub\Util\MetacriticScraper::getMetascore($this->metacritic);
+    }
 }

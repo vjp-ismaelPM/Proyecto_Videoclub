@@ -212,4 +212,13 @@ class Cliente{
             $this->logger->info("Este cliente(" . $this->nombre . ") no tiene alquilado ningún elemento");
         }
     }
+
+    /**
+     * Devuelve los soportes que este cliente tiene actualmente en alquiler.
+     *
+     * @return array Array de objetos Soporte
+     */
+    public function getAlquileres(): array {
+        return $this->soportesAlquilados;
+    }
 }

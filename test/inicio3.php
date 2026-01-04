@@ -102,4 +102,27 @@ $vc->alquilarSocioProducto(0, 2); // Amancio alquila Origen
 echo "<h2>Listado de Socios</h2>";
 $vc->listarSocios();
 
+echo "<hr>";
+echo "<h2>Alquileres de Amancio Ortega con Puntuaciones</h2>";
+// Obtenemos el socio Amancio (índice 0)
+$amancio = $vc->getSocios()[0] ?? null;
+if ($amancio) {
+    $alquileres = $amancio->getAlquileres(); // <= uso de nuevo método
+    if (count($alquileres) > 0) {
+        echo "<table border='1' cellpadding='10'>";
+        echo "<tr><th>Título</th><th>Puntuación Metacritic</th></tr>";
+        foreach ($alquileres as $soporte) {
+            $titulo = $soporte->getTitulo();
+            $puntuacion = $soporte->getPuntuacion();
+            $puntuacionTexto = $puntuacion !== null ? $puntuacion : 'No disponible';
+            echo "<tr><td><strong>$titulo</strong></td><td>$puntuacionTexto</td></tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "<p>Amancio no tiene alquileres actualmente.</p>";
+    }
+} else {
+    echo "<p>Socio no encontrado.</p>";
+}
+
 ?>

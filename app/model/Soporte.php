@@ -97,6 +97,13 @@ abstract class Soporte
     }
 
     /**
+     * Obtiene la puntuación de Metacritic del producto mediante web scraping.
+     * 
+     * @return int|null Puntuación de Metacritic o null si no está disponible.
+     */
+    abstract public function getPuntuacion(): ?int;
+
+    /**
      * Muestra por pantalla un resumen de los datos del producto (título y precio base).
      * 
      * @return void

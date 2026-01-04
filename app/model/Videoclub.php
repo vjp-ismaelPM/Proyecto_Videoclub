@@ -69,6 +69,17 @@ class Videoclub
         return $this->numTotalAlquileres;
     }
 
+    // GETTERS ADICIONALES
+	/**
+	 * Devuelve el array de socios del videoclub.
+	 *
+	 * @return array Lista de objetos Cliente
+	 */
+	public function getSocios(): array
+	{
+		return $this->socios;
+	}
+
     //METODOS 
 
     /**
