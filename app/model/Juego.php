@@ -90,15 +90,14 @@ class Juego extends Soporte
      * Muestra por pantalla un resumen de los datos del juego,
      * incluyendo la consola y el número de jugadores posibles.
      * 
-     * @return void
+     * @return string Resumen del juego
      */
-    public function muestraResumen()
-    {
-        echo 'Juego para:' . $this->consola . '<br>';
-        parent::muestraResumen();
-        echo
-        '<br>' . $this->muestraJugadoresPosibles();;
-    }
+    public function muestraResumen(): string {
+    $mensaje = 'Juego para:' . $this->consola . '<br>';
+    $mensaje .= parent::muestraResumen();
+    $mensaje .= '<br>' . $this->muestraJugadoresPosibles();
+    return $mensaje;
+}
 
     /**
      * Obtiene la puntuación de Metacritic mediante web scraping.

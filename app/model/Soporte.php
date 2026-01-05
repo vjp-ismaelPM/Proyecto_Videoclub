@@ -106,11 +106,12 @@ abstract class Soporte
     /**
      * Muestra por pantalla un resumen de los datos del producto (título y precio base).
      * 
-     * @return void
+     * @return string Resumen del producto
      */
-    public function muestraResumen()
-    {
-        echo "<strong>" . $this->titulo . "</strong><br>";
-        echo "Precio: " . $this->precio . " € (IVA no incluido)<br>";
-    }
+    public function muestraResumen(): string {
+    $mensaje = "<strong>" . $this->titulo . "</strong><br>";
+    $mensaje .= "Precio: " . $this->precio . " € (IVA no incluido)<br>";
+    echo $mensaje;
+    return $mensaje;
+}
 }

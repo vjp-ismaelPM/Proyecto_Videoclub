@@ -62,16 +62,14 @@ class Dvd extends Soporte
      * Muestra por pantalla un resumen de los datos del DVD,
      * incluyendo los idiomas y el formato de pantalla.
      * 
-     * @return void
+     * @return string Resumen del DVD
      */
-    public function muestraResumen()
-    {
-        echo 'Película en DVD:<br>';
-        parent::muestraResumen();
-        echo
-        '<br>Idiomas: ' . $this->idiomas .
-            '<br>Formato Pantalla: ' . $this->formatPantalla;;
-    }
+    public function muestraResumen(): string {
+    $mensaje = 'Película en DVD:<br>';
+    $mensaje .= parent::muestraResumen();
+    $mensaje .= '<br>Idiomas: ' . $this->idiomas . '<br>Formato Pantalla: ' . $this->formatPantalla;
+    return $mensaje;
+}
 
     /**
      * Obtiene la puntuación de Metacritic mediante web scraping.

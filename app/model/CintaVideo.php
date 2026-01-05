@@ -50,14 +50,15 @@ class CintaVideo extends Soporte
      * Muestra por pantalla un resumen de los datos de la cinta de video,
      * incluyendo la duración de la misma.
      * 
-     * @return void
+     * @return string Resumen de la cinta de video
      */
-    public function muestraResumen()
-    {
-        echo 'Película en VHS:<br>';
-        parent::muestraResumen();
-        echo '<br>Duración: ' . $this->duracion . " minutos";
-    }
+    public function muestraResumen(): string {
+    $mensaje = 'Película en VHS:<br>';
+    $mensaje .= parent::muestraResumen();
+    $mensaje .= '<br>Duración: ' . $this->duracion . " minutos";
+    echo $mensaje;
+    return $mensaje;
+}
 
     /**
      * Obtiene la puntuación de Metacritic mediante web scraping.
