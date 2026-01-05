@@ -165,6 +165,22 @@ class Videoclub
     }
 
     /**
+     * Crea e incluye un nuevo Bluray en el catálogo.
+     * 
+     * @param string $urlMetacritic URL de Metacritic.
+     * @param string $titulo Título de la película.
+     * @param float $precio Precio de alquiler.
+     * @param int $duracion Duración en minutos.
+     * @param bool $is4k Si es 4K.
+     * @return void
+     */
+    public function incluirBluray(string $urlMetacritic, string $titulo, float $precio, int $duracion, bool $is4k)
+    {
+        $producto = new Bluray($titulo, ($this->numProductos), $precio, $duracion, $is4k, $urlMetacritic);
+        $this->incluirProducto($producto);
+    }
+
+    /**
      * Incluye un nuevo socio en el videoclub.
      * 
      * @param string $nombre Nombre del nuevo socio.

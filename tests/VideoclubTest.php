@@ -84,4 +84,18 @@ class VideoclubTest extends TestCase
         $socios = $this->videoclub->getSocios();
         $this->assertEquals(1, $socios[0]->getNumSoportesAlquilados());
     }
+
+    /**
+     * @test
+     * Verifica que se puede incluir un Bluray correctamente
+     */
+    public function testIncluirBlurayFunciona(): void
+    {
+        $this->videoclub->incluirBluray("http://meta.com/avatar", "Avatar", 25.0, 162, true);
+        
+        $this->videoclub->incluirSocio("TestUserBd");
+        $this->videoclub->alquilarSocioProducto(0, 0);
+        $socios = $this->videoclub->getSocios();
+        $this->assertEquals(1, $socios[0]->getNumSoportesAlquilados());
+    }
 }
