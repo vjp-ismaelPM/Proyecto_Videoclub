@@ -70,4 +70,18 @@ class VideoclubTest extends TestCase
         $socios = $this->videoclub->getSocios();
         $this->assertEquals(0, $socios[0]->getNumSoportesAlquilados());
     }
+    /**
+     * @test
+     * Verifica que se puede incluir un DVD correctamente
+     */
+    public function testIncluirDvdFunciona(): void
+    {
+        $this->videoclub->incluirDvd("http://meta.com", "Inception", 20.0, 148, "Inglés", "16:9");
+        // No hay método público para obtener productos directos, pero podemos 'listarProductos' o confiar en que no explota.
+        // O alquilarlo.
+        $this->videoclub->incluirSocio("TestUser");
+        $this->videoclub->alquilarSocioProducto(0, 0);
+        $socios = $this->videoclub->getSocios();
+        $this->assertEquals(1, $socios[0]->getNumSoportesAlquilados());
+    }
 }

@@ -141,9 +141,9 @@ class Videoclub
      * @param string $pantalla Formato de pantalla.
      * @return void
      */
-    public function incluirDvd(string $urlMetacritic, string $titulo, float $precio, string $idimoas, string $pantalla)
+    public function incluirDvd(string $urlMetacritic, string $titulo, float $precio, int $duracion, string $idimoas, string $pantalla)
     {
-        $producto = new Dvd($titulo, ($this->numProductos), $precio, $idimoas, $pantalla, $urlMetacritic);
+        $producto = new Dvd($titulo, ($this->numProductos), $precio, $duracion, $idimoas, $pantalla, $urlMetacritic);
         $this->incluirProducto($producto);
     }
 
