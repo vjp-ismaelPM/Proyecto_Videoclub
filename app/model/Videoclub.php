@@ -3,9 +3,10 @@
 namespace Dwes\ProyectoVideoclub\Model;
 
 
-use Dwes\ProyectoVideoclub\Model\Util\CupoSuperadoException;
-use Dwes\ProyectoVideoclub\Model\Util\SoporteYaAlquiladoException;
-use Dwes\ProyectoVideoclub\Model\Util\SoporteNoEncontradoException;
+use Dwes\Videoclub\Exception\CupoSuperadoException;
+use Dwes\Videoclub\Exception\SoporteYaAlquiladoException;
+use Dwes\Videoclub\Exception\SoporteNoEncontradoException;
+use Dwes\Videoclub\Exception\ClienteNoExisteException;
 use Dwes\ProyectoVideoclub\Util\LogFactory;
 use Psr\Log\LoggerInterface;
 
@@ -221,27 +222,28 @@ class Videoclub
      * @return self
      */
     public function alquilarSocioProducto(int $numCliente, int $numSoporte)
-    {
-        if ($numCliente <= $this->numSocios && $numSoporte <= $this->numProductos) {
-            $socio = $this->socios[$numCliente];
-            $producto = $this->productos[$numSoporte];
+{
+    if ($numCliente < 0 || $numCliente >= $this->numSocios) {
+        throw new ClienteNoExisteException("No existe el cliente con id $numCliente");
+    }
 
+    $socio = $this->socios[$numCliente];
+    $producto = $this->productos[$numSoporte] ?? null;
 
-            try {
-                $socio->alquilar($producto);
-                $this->logger->info("Alquilado soporte a: " . $socio->getNombre(), [
-                    'socio' => $socio->getNombre(),
-                    'producto' => $producto->getTitulo()
-                ]);
-            } catch (SoporteYaAlquiladoException | CupoSuperadoException $e) {
-                $this->logger->info($e->getMessage());
-            }
-        } else {
-            $this->logger->info("Introduce valores correctos");
-        }
-
+    if (!$producto) {
+        $this->logger->info("Número de soporte: $numSoporte no encontrado");
         return $this;
     }
+
+    try {
+        $socio->alquilar($producto);
+        $producto->setAlquilado(true);
+    } catch (SoporteYaAlquiladoException | CupoSuperadoException $e) {
+        $this->logger->info($e->getMessage());
+    }
+
+    return $this;
+}
 
     /**
      * Alquila varios productos a un socio.
@@ -304,39 +306,29 @@ class Videoclub
      * @return self
      */
     public function devolverSocioProducto(int $numSocio, int $numProducto): self
-    {
-        if ($numSocio < 0 || $numSocio >= $this->numSocios) {
+{
+    if ($numSocio < 0 || $numSocio >= $this->numSocios) {
+        throw new ClienteNoExisteException("No existe el cliente con id $numSocio");
+    }
 
-            $this->logger->info("Número de socio: " . $numSocio . " no encontrado", ['numSocio' => $numSocio]);
-            return $this;
-        }
+    $socio = $this->socios[$numSocio];
+    $producto = $this->productos[$numProducto] ?? null;
 
-        if ($numProducto < 0 || $numProducto >= $this->numProductos) {
-
-            $this->logger->info("Número de soporte: " . $numProducto . " no encontrado", ['numProducto' => $numProducto]);
-            return $this;
-        }
-
-        $socio = $this->socios[$numSocio];
-        $producto = $this->productos[$numProducto];
-
-        // Intentar devolver el soporte
-        try {
-            $socio->devolver($numProducto);
-            $producto->setAlquilado(false); // marcar como no alquilado
-            $this->logger->info("El soporte " . $producto->getTitulo() . " ha sido devuelto por " . $socio->getNombre(), [
-                'socio' => $socio->getNombre(),
-                'producto' => $producto->getTitulo()
-            ]);
-        } catch (SoporteNoEncontradoException $e) {
-            $this->logger->info("El socio " . $socio->getNombre() . " no tenía alquilado el soporte " . $producto->getTitulo(), [
-                'socio' => $socio->getNombre(),
-                'producto' => $producto->getTitulo()
-            ]);
-        }
-
+    if (!$producto) {
+        $this->logger->info("Número de soporte: $numProducto no encontrado");
         return $this;
     }
+
+    try {
+        $socio->devolver($numProducto);
+        $producto->setAlquilado(false);
+    } catch (SoporteNoEncontradoException $e) {
+        $this->logger->info("El socio no tenía alquilado el soporte");
+    }
+
+    return $this;
+}
+
 
     /**
      * Devuelve varios productos alquilados por un socio.

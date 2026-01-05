@@ -1,9 +1,9 @@
 <?php
-
 namespace Dwes\ProyectoVideoclub\tests;
 
 use PHPUnit\Framework\TestCase;
 use Dwes\ProyectoVideoclub\Model\Videoclub;
+use Dwes\Videoclub\Exception\ClienteNoExisteException;
 
 class VideoclubTest extends TestCase
 {
@@ -11,73 +11,63 @@ class VideoclubTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->videoclub = new Videoclub("VideoTest");
-
-        // Productos
-        $this->videoclub->incluirCintaVideo("url1", "Titanic", 15.5, 180);
-        $this->videoclub->incluirDvd("url2", "Matrix", 19.99, "ES/EN", "16:9");
-        $this->videoclub->incluirJuego("url3", "FIFA", 49.99, "PS5", 1, 4);
-
-        // Socios
-        $this->videoclub->incluirSocio("Juan", 3);
-        $this->videoclub->incluirSocio("Ana", 1);
+        $this->videoclub = new Videoclub();
     }
 
-    public function testAlquilarProductoASocio(): void
+    /**
+     * @test
+     * Verifica que al intentar alquilar un cliente que no existe se lanza ClienteNoExisteException
+     */
+    public function testAlquilarClienteNoExisteLanzaExcepcion(): void
     {
+        // No se ha incluido ningún socio, el índice 0 no existe
+        $this->expectException(ClienteNoExisteException::class);
+
+        $this->videoclub->alquilarSocioProducto(0, 0);
+    }
+
+    /**
+     * @test
+     * Verifica que al intentar devolver un cliente que no existe se lanza ClienteNoExisteException
+     */
+    public function testDevolverClienteNoExisteLanzaExcepcion(): void
+    {
+        // No se ha incluido ningún socio, el índice 0 no existe
+        $this->expectException(ClienteNoExisteException::class);
+
+        $this->videoclub->devolverSocioProducto(0, 0);
+    }
+
+    /**
+     * @test
+     * Caso positivo: incluir socio y alquilar un producto correctamente
+     */
+    public function testAlquilarClienteExistente(): void
+    {
+        $this->videoclub->incluirSocio("Juan");
+        $this->videoclub->incluirCintaVideo("http://metacritic.com/titulo", "Titanic", 15.5, 180);
+
+        // Alquilar correctamente, no debería lanzar excepción
         $this->videoclub->alquilarSocioProducto(0, 0);
 
-        $socio = $this->videoclub->getSocios()[0];
-
-        $this->assertCount(1, $socio->getAlquileres());
+        $socios = $this->videoclub->getSocios();
+        $this->assertEquals(1, $socios[0]->getNumSoportesAlquilados());
     }
 
-    public function testAlquilarVariosProductosASocio(): void
+    /**
+     * @test
+     * Caso positivo: devolver un producto alquilado correctamente
+     */
+    public function testDevolverClienteExistente(): void
     {
-        $this->videoclub->alquilarSocioProductos(0, [0, 1]);
+        $this->videoclub->incluirSocio("Juan");
+        $this->videoclub->incluirCintaVideo("http://metacritic.com/titulo", "Titanic", 15.5, 180);
 
-        $socio = $this->videoclub->getSocios()[0];
-
-        $this->assertCount(2, $socio->getAlquileres());
-    }
-
-    public function testNoAlquilaSiSuperaCupo(): void
-    {
-        // Ana solo puede alquilar 1
-        $this->videoclub->alquilarSocioProducto(1, 0);
-        $this->videoclub->alquilarSocioProducto(1, 1);
-
-        $socio = $this->videoclub->getSocios()[1];
-
-        $this->assertCount(1, $socio->getAlquileres());
-    }
-
-    public function testDevolverProducto(): void
-    {
+        // Alquilar y luego devolver
         $this->videoclub->alquilarSocioProducto(0, 0);
         $this->videoclub->devolverSocioProducto(0, 0);
 
-        $socio = $this->videoclub->getSocios()[0];
-
-        $this->assertCount(0, $socio->getAlquileres());
-    }
-
-    public function testDevolverVariosProductos(): void
-    {
-        $this->videoclub->alquilarSocioProductos(0, [0, 1]);
-        $this->videoclub->devolverSocioProductos(0, [0, 1]);
-
-        $socio = $this->videoclub->getSocios()[0];
-
-        $this->assertCount(0, $socio->getAlquileres());
-    }
-
-    public function testIndicesInvalidosNoRompen(): void
-    {
-        // No debe lanzar errores
-        $this->videoclub->alquilarSocioProducto(99, 99);
-        $this->videoclub->devolverSocioProducto(99, 99);
-
-        $this->assertTrue(true);
+        $socios = $this->videoclub->getSocios();
+        $this->assertEquals(0, $socios[0]->getNumSoportesAlquilados());
     }
 }

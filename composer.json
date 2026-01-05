@@ -12,11 +12,11 @@
     "scripts": {
         "test": "phpunit --testdox --colors tests",
         "coverage": "phpunit --coverage-html coverage-report tests"
-
     },
     "autoload": {
         "psr-4": {
-            "Dwes\\ProyectoVideoclub\\": "app/"
+            "Dwes\\ProyectoVideoclub\\": "app/",
+            "Dwes\\Videoclub\\": "app/"
         }
     },
     "authors": [

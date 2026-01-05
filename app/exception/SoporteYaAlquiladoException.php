@@ -1,10 +1,9 @@
 <?php
-namespace Dwes\ProyectoVideoclub\Model\Util;
+namespace Dwes\Videoclub\Exception;
 
 /**
  * Excepción lanzada cuando se intenta alquilar un soporte que ya está alquilado.
  * 
- * @package Dwes\ProyectoVideoclub\Model\Util
+ * @package Dwes\Videoclub\Exception
  */
 class SoporteYaAlquiladoException extends VideoclubException {}
-?>

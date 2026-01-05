@@ -2,7 +2,7 @@
 <html lang="en">
  <head>
   <meta charset="UTF-8">
-  <title>Dashboard for C:\xampp\htdocs\Proyecto_Videoclub\app\util</title>
+  <title>Dashboard for C:\xampp\htdocs\Proyecto_Videoclub\app\exception</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="../_css/bootstrap.min.css?v=10.1.16" rel="stylesheet" type="text/css">
   <link href="../_css/nv.d3.min.css?v=10.1.16" rel="stylesheet" type="text/css">
@@ -17,7 +17,7 @@
       <nav aria-label="breadcrumb">
        <ol class="breadcrumb">
          <li class="breadcrumb-item"><a href="../index.html">C:\xampp\htdocs\Proyecto_Videoclub\app</a></li>
-         <li class="breadcrumb-item"><a href="index.html">util</a></li>
+         <li class="breadcrumb-item"><a href="index.html">exception</a></li>
          <li class="breadcrumb-item active">(Dashboard)</li>
 
        </ol>
@@ -58,7 +58,6 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="MetacriticScraper.php.html#10">Dwes\ProyectoVideoclub\Util\MetacriticScraper</a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -75,7 +74,6 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="MetacriticScraper.php.html#10">Dwes\ProyectoVideoclub\Util\MetacriticScraper</a></td><td class="text-right">240</td></tr>
 
        </tbody>
       </table>
@@ -113,11 +111,6 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="MetacriticScraper.php.html#18"><abbr title="Dwes\ProyectoVideoclub\Util\MetacriticScraper::getMetacriticData">getMetacriticData</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="MetacriticScraper.php.html#67"><abbr title="Dwes\ProyectoVideoclub\Util\MetacriticScraper::getMetascore">getMetascore</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="MetacriticScraper.php.html#79"><abbr title="Dwes\ProyectoVideoclub\Util\MetacriticScraper::extractMetascore">extractMetascore</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="MetacriticScraper.php.html#108"><abbr title="Dwes\ProyectoVideoclub\Util\MetacriticScraper::extractUserscore">extractUserscore</abbr></a></td><td class="text-right">0%</td></tr>
-       <tr><td><a href="MetacriticScraper.php.html#134"><abbr title="Dwes\ProyectoVideoclub\Util\MetacriticScraper::extractSummary">extractSummary</abbr></a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -134,10 +127,6 @@
         </tr>
        </thead>
        <tbody>
-       <tr><td><a href="MetacriticScraper.php.html#79"><abbr title="Dwes\ProyectoVideoclub\Util\MetacriticScraper::extractMetascore">extractMetascore</abbr></a></td><td class="text-right">20</td></tr>
-       <tr><td><a href="MetacriticScraper.php.html#108"><abbr title="Dwes\ProyectoVideoclub\Util\MetacriticScraper::extractUserscore">extractUserscore</abbr></a></td><td class="text-right">20</td></tr>
-       <tr><td><a href="MetacriticScraper.php.html#18"><abbr title="Dwes\ProyectoVideoclub\Util\MetacriticScraper::getMetacriticData">getMetacriticData</abbr></a></td><td class="text-right">12</td></tr>
-       <tr><td><a href="MetacriticScraper.php.html#134"><abbr title="Dwes\ProyectoVideoclub\Util\MetacriticScraper::extractSummary">extractSummary</abbr></a></td><td class="text-right">12</td></tr>
 
        </tbody>
       </table>
@@ -166,7 +155,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#classCoverageDistribution svg')
-      .datum(getCoverageDistributionData([1,0,0,0,0,0,0,0,0,0,0,1], "Class Coverage"))
+      .datum(getCoverageDistributionData([0,0,0,0,0,0,0,0,0,0,0,5], "Class Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -184,7 +173,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#methodCoverageDistribution svg')
-      .datum(getCoverageDistributionData([5,0,0,0,0,0,0,0,0,0,0,1], "Method Coverage"))
+      .datum(getCoverageDistributionData([0,0,0,0,0,0,0,0,0,0,0,1], "Method Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -234,7 +223,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Cyclomatic Complexity');
 
     d3.select('#classComplexity svg')
-      .datum(getComplexityData([[100,1,"<a href=\"LogFactory.php.html#14\">Dwes\\ProyectoVideoclub\\Util\\LogFactory<\/a>"],[0,15,"<a href=\"MetacriticScraper.php.html#10\">Dwes\\ProyectoVideoclub\\Util\\MetacriticScraper<\/a>"]], 'Class Complexity'))
+      .datum(getComplexityData([[100,1,"<a href=\"ClienteNoExisteException.php.html#10\">Dwes\\Videoclub\\Exception\\ClienteNoExisteException<\/a>"],[100,0,"<a href=\"CupoSuperadoException.php.html#9\">Dwes\\Videoclub\\Exception\\CupoSuperadoException<\/a>"],[100,0,"<a href=\"SoporteNoEncontradoException.php.html#9\">Dwes\\Videoclub\\Exception\\SoporteNoEncontradoException<\/a>"],[100,0,"<a href=\"SoporteYaAlquiladoException.php.html#9\">Dwes\\Videoclub\\Exception\\SoporteYaAlquiladoException<\/a>"],[100,0,"<a href=\"VideoclubException.php.html#9\">Dwes\\Videoclub\\Exception\\VideoclubException<\/a>"]], 'Class Complexity'))
       .transition()
       .duration(500)
       .call(chart);
@@ -258,7 +247,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Method Complexity');
 
     d3.select('#methodComplexity svg')
-      .datum(getComplexityData([[100,1,"<a href=\"LogFactory.php.html#22\">Dwes\\ProyectoVideoclub\\Util\\LogFactory::getLogger<\/a>"],[0,3,"<a href=\"MetacriticScraper.php.html#18\">Dwes\\ProyectoVideoclub\\Util\\MetacriticScraper::getMetacriticData<\/a>"],[0,1,"<a href=\"MetacriticScraper.php.html#67\">Dwes\\ProyectoVideoclub\\Util\\MetacriticScraper::getMetascore<\/a>"],[0,4,"<a href=\"MetacriticScraper.php.html#79\">Dwes\\ProyectoVideoclub\\Util\\MetacriticScraper::extractMetascore<\/a>"],[0,4,"<a href=\"MetacriticScraper.php.html#108\">Dwes\\ProyectoVideoclub\\Util\\MetacriticScraper::extractUserscore<\/a>"],[0,3,"<a href=\"MetacriticScraper.php.html#134\">Dwes\\ProyectoVideoclub\\Util\\MetacriticScraper::extractSummary<\/a>"]], 'Method Complexity'))
+      .datum(getComplexityData([[100,1,"<a href=\"ClienteNoExisteException.php.html#12\">Dwes\\Videoclub\\Exception\\ClienteNoExisteException::__construct<\/a>"]], 'Method Complexity'))
       .transition()
       .duration(500)
       .call(chart);
