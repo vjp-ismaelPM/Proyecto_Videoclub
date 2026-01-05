@@ -4,8 +4,6 @@ namespace Dwes\ProyectoVideoclub\Util;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-use Monolog\Level;
-
 use Psr\Log\LoggerInterface;
 
 /**
@@ -13,16 +11,25 @@ use Psr\Log\LoggerInterface;
  * 
  * @package Dwes\ProyectoVideoclub\Util
  */
-class LogFactory {
+class LogFactory
+{
     /**
      * Crea y configura una instancia de LoggerInterface.
      * 
      * @param string $channel Nombre del canal de log.
      * @return LoggerInterface Instancia del logger configurada.
      */
-    public static function getLogger(string $channel = 'VideoclubLogger'): LoggerInterface {
+    public static function getLogger(string $channel = 'VideoclubLogger'): LoggerInterface
+    {
         $logger = new Logger($channel);
-        $logger->pushHandler(new StreamHandler(__DIR__ . '/../../logs/videoclub.log', Level::Debug));
+
+        $logger->pushHandler(
+            new StreamHandler(
+                __DIR__ . '/../../logs/videoclub.log',
+                Logger::DEBUG
+            )
+        );
+
         return $logger;
     }
 }
