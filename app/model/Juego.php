@@ -3,32 +3,64 @@
 namespace Dwes\ProyectoVideoclub\Model;
 
 
-include_once(__DIR__ . '/../../autoload.php');
 
+
+/**
+ * Clase que representa un Juego.
+ * Hereda de Soporte.
+ * 
+ * @package Dwes\ProyectoVideoclub\Model
+ */
 class Juego extends Soporte
 {
 
     //CONSTRUCTOR
+    /**
+     * Constructor de la clase Juego.
+     * 
+     * @param string $titulo Título del videojuego.
+     * @param int $numero Número identificador único.
+     * @param float $precio Precio base de alquiler.
+     * @param string $consola Nombre de la consola para la que es el juego.
+     * @param int $minJugadores Número mínimo de jugadores permitidos.
+     * @param int $maxJugadores Número máximo de jugadores permitidos.
+     * @param string $metacritic URL de Metacritic.
+     */
     public function __construct(
-        private string $titulo = "",
-        private int $numero = 0,
-        private float $precio = 0,
+        string $titulo = "",
+        int $numero = 0,
+        float $precio = 0,
         private String $consola = "",
         private int $minJugadores = 0,
         private int $maxJugadores = 0,
+        string $metacritic = ""
     ) {
-        parent::__construct($titulo, $numero, $precio);
+        parent::__construct($titulo, $numero, $precio, false, $metacritic);
     }
 
     //GETTERS & SETTERS
+    /**
+     * Obtiene la consola
+     * @return string Consola
+     */
     public function getConsola(): string
     {
         return $this->consola;
     }
+
+    /**
+     * Obtiene el mínimo de jugadores
+     * @return int Mínimo de jugadores
+     */
     public function getMinJugadores(): int
     {
         return $this->minJugadores;
     }
+
+    /**
+     * Obtiene el máximo de jugadores
+     * @return int Máximo de jugadores
+     */
     public function getMaxJugadores(): int
     {
         return $this->maxJugadores;
@@ -37,7 +69,9 @@ class Juego extends Soporte
 //METODOS
 
     /**
-     * Metodo que retorna un String para saber si el juego es de un solo jugador o de varios
+     * Retorna un String para saber si el juego es de un solo jugador o de varios
+     * 
+     * @return string Descripción de jugadores posibles
      */
     public function muestraJugadoresPosibles()
     {
@@ -53,13 +87,28 @@ class Juego extends Soporte
     }
 
     /**
-     * Metodo que muestra un resumen de los datos del soporte
+     * Muestra por pantalla un resumen de los datos del juego,
+     * incluyendo la consola y el número de jugadores posibles.
+     * 
+     * @return string Resumen del juego
      */
-    public function muestraResumen()
+    public function muestraResumen(): string {
+    $mensaje = 'Juego para:' . $this->consola . '<br>';
+    $mensaje .= parent::muestraResumen();
+    $mensaje .= '<br>' . $this->muestraJugadoresPosibles();
+    return $mensaje;
+}
+
+    /**
+     * Obtiene la puntuación de Metacritic mediante web scraping.
+     * 
+     * @return int|null Puntuación de Metacritic o null si no está disponible.
+     */
+    public function getPuntuacion(): ?int
     {
-        echo 'Juego para:' . $this->consola . '<br>';
-        parent::muestraResumen();
-        echo
-        '<br>' . $this->muestraJugadoresPosibles();;
+        if (empty($this->metacritic)) {
+            return null;
+        }
+        return \Dwes\ProyectoVideoclub\Util\MetacriticScraper::getMetascore($this->metacritic);
     }
 }

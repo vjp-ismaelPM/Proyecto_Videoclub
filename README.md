@@ -1,229 +1,202 @@
 # Proyecto Videoclub
 
 **Autores:**  
+
 - Ismael Pablos Miguel  
 - Aitor Trujillo Pablo
 
-**Proyecto Videoclub - Desarrollo Web en Entorno Servidor** 
+**Proyecto Videoclub - Desarrollo Web en Entorno Servidor**
 
 ---
 
 ## Descripción del proyecto
 
-Este proyecto forma parte de nuestro trabajo y consiste en el desarrollo de una aplicación en **PHP** que simula el funcionamiento de un videoclub.  
-El sistema permite gestionar clientes, productos (DVDs, juegos y cintas de vídeo) y los alquileres de dichos productos.  
+Este proyecto consiste en el desarrollo de una aplicación en **PHP** que simula el funcionamiento de un videoclub.  
+El sistema permite gestionar clientes, productos (DVDs, juegos y cintas de vídeo) y los alquileres de dichos productos.
 
-Durante el desarrollo hemos aplicado los principios de **Programación Orientada a Objetos (POO)**, como herencia, encapsulación y manejo de excepciones personalizadas.  
-El código está organizado de forma modular para mantener una estructura limpia, legible y fácil de mantener.
-
-
+Se han aplicado principios de **Programación Orientada a Objetos (POO)**, como herencia, encapsulación, interfaces y manejo de excepciones personalizadas. Además, se ha integrado un sistema de **logging** profesional, **documentación técnica** automática y **web scraping de Metacritic**.
 
 ---
 
 ## Tecnologías y herramientas utilizadas
 
-- **Lenguaje:** PHP 8.0 o superior  
-- **Entorno de desarrollo:** XAMPP (Apache + PHP)  
-- **Editor recomendado:** Visual Studio Code  
-- **Sistema operativo:** Compatible con Windows, macOS y Linux  
----
-
-
-
----
-## Uso de herramientas de asistencia
-
-Durante el desarrollo del proyecto hemos hecho uso responsable de **ChatGPT** y **Grok** para:
-
-- Obtener sugerencias sobre la organización del código y estructura de clases
-- Revisar y optimizar algunos métodos específicos
-- Resolver dudas de sintaxis o uso de POO en PHP
-
-Estas herramientas se han utilizado únicamente como apoyo, asegurándonos de entender y validar todas las soluciones antes de incorporarlas al proyecto.
+- **Lenguaje:** PHP 8.1 o superior
+- **Gestor de dependencias:** [Composer](https://getcomposer.org/)
+- **Logging:** [Monolog](https://github.com/Seldaek/monolog) (vía PSR-3)
+- **Documentación:** [phpDocumentor](https://www.phpdoc.org/)
+- **Web Scraping:** Funciones nativas de PHP (DOMDocument, DOMXPath)
+- **Entorno de desarrollo:** XAMPP / Docker
+- **Editor recomendado:** Visual Studio Code
 
 ---
 
+## Instalación y Configuración
+
+1. **Clonar el repositorio** en tu carpeta de servidor local (ej. `C:\xampp\htdocs\Proyecto_Videoclub`).
+
+2. **Instalar dependencias**:
+   Asegúrate de tener Composer instalado y ejecuta en la raíz del proyecto:
+
+   ```bash
+   composer install
+   ```
+
+3. **Configurar permisos**:
+   Asegúrate de que la carpeta `logs/` tenga permisos de escritura para que el sistema pueda generar los archivos de log.
+
+---
 
 ## Estructura del proyecto
 
-```
+```text
 Proyecto_Videoclub/
-│
-├── README.md
-├── autoload.php
-│
 ├── app/
-│   ├── model/
+│   ├── model/              # Clases del modelo de negocio
+│   │   ├── Util/           # Excepciones personalizadas
 │   │   ├── CintaVideo.php
 │   │   ├── Cliente.php
 │   │   ├── Dvd.php
 │   │   ├── Juego.php
-│   │   ├── Resumible.php
 │   │   ├── Soporte.php
-│   │   ├── Videoclub.php
-│   │   ├── util/
-│   │   │   ├── ClienteNoEncontradoException.php
-│   │   │   ├── CupoSuperadoException.php
-│   │   │   ├── SoporteNoEncontradoException.php
-│   │   │   ├── SoporteYaAlquiladoException.php
-│   │   │   └── VideoclubException.php
-│   │
-│   ├── login/
-│   │   ├── createCliente.php
-│   │   ├── formCreateCliente.php
-│   │   ├── formUpdateCliente.php
-│   │   ├── login.php
-│   │   ├── logout.php
-│   │   ├── mainAdmin.php
-│   │   ├── mainCliente.php
-│   │   ├── removeCliente.php
-│   │   ├── updateCliente.php
-│   │   └── css/
-│   │   │   ├── createCliente.css
-│   │   │   ├── mainAdmin.css
-│   │   │   ├── mainCliente.css
-│   │   │   └── updateCliente.css
-│
+│   │   └── Videoclub.php
+│   ├── util/               # Utilidades generales
+│   │   ├── LogFactory.php  # Factoría para el sistema de logs
+│   │   └── MetacriticScraper.php  # Web scraping de Metacritic
+│   └── login/              # Sistema de autenticación
+│       ├── login.php       # Procesa el login
+│       ├── mainAdmin.php   # Panel de administrador
+│       └── mainCliente.php # Panel de cliente
 ├── public/
-│   └── index.php
-│
-├── img/
-│   └── (imágenes usadas en la interfaz)
-│
-├── test/
-│   └── inicio.php
-│
-└── vendor/
-    └── (dependencias, si se usan)
+│   └── index.php           # Página de login (punto de entrada)
+├── docs/                   # Documentación técnica generada (HTML)
+├── logs/                   # Archivos de log del sistema
+├── test/                   # Scripts de prueba y ejemplos
+│   ├── inicio.php
+│   ├── inicio3.php         # Pruebas con Metacritic
+│   └── test_videoclub_log.php
+├── vendor/                 # Dependencias de Composer
+├── composer.json           # Configuración de dependencias
+└── README.md
 ```
 
 ---
 
-## Cómo ejecutar el proyecto
+## Cómo Usar la Aplicación
 
-1. **Colocar el proyecto en XAMPP**  
-   Descarga o clona la carpeta `proyecto_videoclub` dentro del directorio `htdocs` de XAMPP.  
-   ```
-   C:\xampp\htdocs\proyecto_videoclub
-   ```
+### 1. Acceso al Sistema de Login
 
-2. **Iniciar Apache desde XAMPP**  
-   Abre el panel de control y activa el servicio de **Apache**.
+**URL de acceso:**
 
-3. **Abrir el proyecto en el navegador**  
-   Accede a la siguiente URL:
-   ```
-   http://localhost/proyecto_videoclub/public/idex.php
-   ```
-
-   En el caso de que quieras probar los test es en:
-   ```
-   http://localhost/proyecto_videoclub/test/inicio.php
-   ```
-   
-
-4. **Probar las distintas funcionalidades**  
-   En el archivo `inicio.php` se incluyen diferentes bloques de pruebas comentados.  
-   Para ejecutar una prueba concreta, descomenta el bloque correspondiente y comenta los demás para evitar una salida por pantalla demasiado extensa.
-
----
-
-## Funcionamiento de la aplicación
-
-El sistema permite gestionar las operaciones básicas de un videoclub:
-
-- Registrar y listar clientes (socios)  
-- Registrar distintos tipos de productos: juegos, DVDs y cintas de vídeo  
-- Alquilar y devolver productos  
-- Controlar los límites de alquiler por cliente  
-- Gestionar errores mediante excepciones personalizadas  
-
-Excepciones implementadas:
-- `SoporteYaAlquiladoException`  
-- `SoporteNoEncontradoException`  
-- `CupoSuperadoException`  
-- `ClienteNoEncontradoException`  
-- `VideoclubException`
-
-Además, se ha incluido la posibilidad de encadenar métodos para una ejecución más fluida:
-```php
-$vc->alquilarSocioProducto(1,1)->listarSocios();
+```
+http://localhost/Proyecto_Videoclub/public/index.php
 ```
 
----
+O simplemente:
 
-## Diseño del código
+```
+http://localhost/Proyecto_Videoclub/
+```
 
-- El proyecto está desarrollado íntegramente con **Programación Orientada a Objetos**.  
-- Las clases `Dvd`, `Juego` y `CintaVideo` heredan de la clase abstracta `Soporte`.  
-- Se ha implementado una interfaz `Resumible` para definir un formato común de presentación de información.  
-- Todas las excepciones están organizadas dentro del namespace `app\util`.  
-- El código está preparado para poder ampliarse fácilmente añadiendo nuevos tipos de soportes o reglas de negocio.
----
+**Credenciales de prueba:**
 
-## Requisitos
-
-- PHP 8.0 o superior
-- Servidor web (recomendado: XAMPP con Apache)
-- Navegador web moderno
-
-
-## Estructura principal del proyecto
-
-- `autoload.php` — cargador automático de clases (namespace -> ruta `app/`)
-- `app/` — código fuente (modelos, lógica y utilidades)
-  - `model/` — clases del dominio (Soporte, Dvd, Juego, CintaVideo, Cliente, Videoclub, etc.)
-  - `model/util/` — excepciones personalizadas
-  - `login/` — páginas y controladores de login, paneles y formularios
-- `public/` — punto de entrada público (front-end / formulario de login)
-- `img/` — imágenes usadas en la interfaz
-- `test/` — scripts de pruebas locales
-- `vendor/` — dependencias (si se usan)
-
-
-## Instalación y ejecución (XAMPP en Windows)
-
-1. Copia la carpeta del proyecto a `C:\xampp\htdocs\` (por ejemplo: `C:\xampp\htdocs\Proyecto_Videoclub`).
-2. Arranca Apache (y MySQL si lo necesitas) desde el panel de control de XAMPP.
-3. Abre en el navegador la URL siguiente:
-   - http://localhost/Proyecto_Videoclub/public/index.php
-
-
-## Uso básico
-
-- Credenciales de administrador por defecto:
+- **Administrador:**
   - Usuario: `admin`
   - Contraseña: `admin`
 
-- El administrador puede:
-  - Ver el listado de clientes y soportes
-  - Crear, editar y eliminar clientes
+- **Clientes:**
+  - Usuario: `amancio` / Contraseña: `1234`
+  - Usuario: `pablo` / Contraseña: `abcd`
 
-- Un usuario cliente se crea desde el panel de administración (solo admin). Los datos de clientes y soportes se guardan en la sesión para esta versión simple de la aplicación.
+### 2. Archivos de Prueba
 
+**Prueba básica del videoclub:**
 
-## Inicializar datos y sesiones
+```
+http://localhost/Proyecto_Videoclub/test/inicio.php
+```
 
-- La aplicación guarda temporalmente los datos en la sesión (`$_SESSION['soportesData']`, `$_SESSION['clientesData']`, etc.).
-- Si accedes por primera vez y faltan datos, puedes iniciar sesión como admin y añadir soportes y clientes desde el panel.
-- Para pruebas locales, puedes usar el script `test/inicio.php` para crear objetos manualmente o inspeccionar la carga automática.
+**Prueba con Metacritic y Web Scraping:**
 
+```
+http://localhost/Proyecto_Videoclub/test/inicio3.php
+```
 
-## Desarrollo y pruebas
+**Prueba del sistema de logs:**
 
-- El autoload está en `autoload.php`. Respeta el namespace `Dwes\ProyectoVideoclub\Model\...` para que las clases se carguen correctamente.
-- Para depurar, habilita la visualización de errores en `php.ini` o al comienzo de los scripts durante el desarrollo:
-  - ini_set('display_errors', 1);
-  - error_reporting(E_ALL);
-
-
-## Notas importantes
-
-- Esta versión usa la sesión como almacenamiento temporal. Para producción deberías migrar a una base de datos y aplicar hashing de contraseñas (password_hash / password_verify).
-- Algunos métodos en las clases (por ejemplo en `Cliente.php` o `Videoclub.php`) están incompletos o representados de forma resumida; revisar e implementar según necesidades.
+```bash
+php test/test_videoclub_log.php
+```
 
 ---
 
-Si necesitas que incluya instrucciones más detalladas (ej.: cómo añadir un conjunto inicial de soportes por defecto, ejemplos de uso o un script de inicialización), dime qué prefieres y lo añado.
+## Funcionalidades Principales
+
+### 1. Gestión de Alquileres
+
+- Registro de socios y catálogo de productos.
+- Alquiler individual o múltiple de soportes.
+- Control de cupos máximos por socio.
+- Gestión de estados de disponibilidad.
+
+### 2. Sistema de Logging (Monolog)
+
+Toda la actividad crítica del sistema (alquileres, devoluciones, errores) se registra automáticamente en `logs/videoclub.log`. Se utiliza una factoría centralizada (`LogFactory`) que devuelve una implementación de `Psr\Log\LoggerInterface`.
+
+### 3. Documentación Técnica (PHPDoc)
+
+El código está íntegramente documentado siguiendo el estándar PHPDoc. Para regenerar la documentación técnica:
+
+```bash
+php vendor/bin/phpdoc -d app/model,app/util -t docs
+```
+
+Puedes visualizarla abriendo `docs/index.html` en cualquier navegador.
+
+### 4. Integración con Metacritic
+
+El sistema permite almacenar URLs de Metacritic para cada soporte y realizar web scraping para obtener:
+
+- **Metascore** (puntuación de críticos)
+- **User Score** (puntuación de usuarios)
+- **Resumen** de la película o juego
+
+**Nota:** Los métodos `incluirCintaVideo`, `incluirDvd` e `incluirJuego` requieren la URL de Metacritic como primer parámetro. Si no tienes URL, pasa una cadena vacía `""`.
+
+---
+
+## Características Técnicas
+
+### Programación Orientada a Objetos
+
+- **Herencia**: `CintaVideo`, `Dvd` y `Juego` heredan de la clase abstracta `Soporte`.
+- **Encapsulación**: Todas las propiedades son privadas con getters/setters apropiados.
+- **Interfaces**: Se utiliza `Psr\Log\LoggerInterface` para desacoplar el sistema de logs.
+- **Excepciones**: Gestión robusta de errores mediante excepciones personalizadas en el namespace `Dwes\ProyectoVideoclub\Model\Util`.
+
+### Autoloading
+
+Gestión automática de carga de clases mediante Composer (PSR-4). No es necesario usar `require` o `include` manualmente.
+
+### Web Scraping
+
+Implementado con funciones nativas de PHP:
+
+- `file_get_contents()` con User-Agent personalizado
+- `DOMDocument` y `DOMXPath` para parsear HTML
+- Manejo de errores y valores por defecto
+
+---
+
+## Notas Importantes
+
+- **Encapsulación mejorada**: Las propiedades `$titulo` y `$alquilado` en la clase `Soporte` son privadas y se acceden mediante getters/setters (`getTitulo()`, `getAlquilado()`, `setAlquilado()`).
+
+- **Logs automáticos**: Todas las operaciones importantes se registran automáticamente en `logs/videoclub.log`.
+
+- **Documentación actualizada**: Ejecuta `phpdoc` después de cualquier cambio en el código para mantener la documentación al día.
+
+- **URLs de Metacritic**: Al crear productos, el primer parámetro es la URL de Metacritic. Para productos sin URL, usa `""`.
+
+---
 
 **© 2025 - Ismael Pablos Miguel & Aitor Trujillo Pablo**

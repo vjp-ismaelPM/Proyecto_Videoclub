@@ -1,0 +1,33 @@
+{
+    "name": "dwes/videoclub",
+    "description": "Proyecto Videoclub para DWES",
+    "type": "project",
+    "require": {
+        "monolog/monolog": "^3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10",
+        "phpdocumentor/phpdocumentor": "^4.0"
+    },
+    "scripts": {
+        "test": "phpunit --testdox --colors tests",
+        "coverage": "phpunit --coverage-html coverage-report tests"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dwes\\ProyectoVideoclub\\": "app/",
+            "Dwes\\Videoclub\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Usuario",
+            "email": "usuario@example.com"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "phpdocumentor/shim": true
+        }
+    }
+}
